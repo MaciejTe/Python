@@ -18,6 +18,24 @@ class main():
         self.__list_channels = read.get_list_channels()
         self.__err_handler = Error_handler()
 
+'''
+#Struktura
+    def metoda(self,param, enum):
+        try:
+
+            definicja watku
+
+        except:
+            exc e
+        finally:
+            try:
+                watek start()
+                time.sleep(2)
+                while
+                sprawdzanie rezultatu    (zmienna static z klasy error_handler)
+'''
+
+
     def one_host(self):
         try:
             file_output = open('output.txt', 'a')
@@ -34,6 +52,18 @@ class main():
                 while (len(threading.enumerate()) !=1):
                     pass
 
+
+#### TODO #####
+# 1. Skonsolidowac ponizsze funkcje w jedna, ktora dodatkowo zawiera cos w stylu enuma bedacego ID danej operacji
+# 2. Zastosowac rekurencje w celu powtorzenia danego fragmentu kodu
+# 3. Stworzyc metode do while'a
+# 4. uzupelnic w reszcie klas wyjatki - pod koniec
+# 5. Analogicznie wszystkie punkty dla wielu hostow
+
+############## DO POCZYTANIA ####################3
+# 1. Zmienne i metody static
+# 2. Zmienne klasowe, Dostep i uzycie zmiennych klasowych
+# 3. Python telnet - opcjonalnie
 
 ######## DO DOKONCZENIA, TU GDZIES BLAD jest
                 if thread_CPE.get_func_state() != 0:
