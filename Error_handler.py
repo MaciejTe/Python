@@ -4,7 +4,8 @@
 class Error_handler:
     def __init__(self):
         self.__err_dict = {101 : ('bad SSH server configuration',1),
-                    102 : ('bad pass, bad hostname', 1)}
+                           102 : ('bad pass, bad hostname', 1)
+        }
 
     def err_search(self, err_code):
         if(err_code in self.__err_dict):
