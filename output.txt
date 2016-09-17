@@ -1,0 +1,16 @@
+***START - ONE HOST*******************
+CH1_TCP_U_192.168.10.9	23.2 Mbits/sec
+CH1_TCP_D_192.168.10.9	46.0 Mbits/sec
+CH1_UDP_U_192.168.10.9	48.7 Mbits/sec
+CH1_UDP_D_192.168.10.9	55.0 Mbits/sec
+CH9_TCP_U_192.168.10.9	33.0 Mbits/sec
+CH9_TCP_D_192.168.10.9	48.0 Mbits/sec
+CH9_UDP_U_192.168.10.9	57.7 Mbits/sec
+CH9_UDP_D_192.168.10.9	55.6 Mbits/sec
+CH13_TCP_U_192.168.10.9	35.6 Mbits/sec
+***START - ONE HOST*******************
+CH1_TCP_U_192.168.10.9	17.7 Mbits/sec
+CH1_TCP_D_192.168.10.9	43.9 Mbits/sec
+***START - ONE HOST*******************
+CH1_TCP_U_192.168.10.9	43.9 Mbits/sec
+CH1_TCP_D_192.168.10.9	43.9 Mbits/sec
