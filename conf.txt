@@ -11,15 +11,8 @@ lukaspolon
 fullypein2
 fullypein2
 @master_ip@
-192.168.10.10
-@CPE_credentials@
-192.168.0.11
-admin
-123
-@channels@
-1
-9
-13
+192.168.10.2
+192.168.10.2
 @end@
 
 
