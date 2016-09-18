@@ -3,12 +3,12 @@ import time
 from paramiko.ssh_exception import *
 
 
-class SSH_connection():
-    def __init__(self,hostname, username,password):
-        self.__hostname = hostname
+class SSH_connection(object):
+    def __init__(self, conf_data, host_index):
+        self.__hostname = conf_data['hostname'][host_index]
+        self.__username = conf_data['username'][host_index]
+        self.__password = conf_data['password'][host_index]
         self.__port_SSH = 22
-        self.__username = username
-        self.__password = password
         self.__ssh = None
         self.__s = None
 
