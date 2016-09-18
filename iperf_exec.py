@@ -7,7 +7,7 @@ class iperf(object, SSH_connection):
     def __init__(self,filename, conf_data, host_index):
         SSH_connection.__init__(self, conf_data, host_index)
         self.__port_iperf = conf_data['port'][host_index]
-        self.__master_IP = conf_data['master_ip'][host_index]
+        self.__master_IP = conf_data['master_ip'][0]
         self.__hostname = conf_data['hostname'][host_index]
         self.__username = conf_data['username'][host_index]
         self.__password = conf_data['password'][host_index]
