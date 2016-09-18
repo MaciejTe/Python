@@ -1,6 +1,5 @@
 import re
 
-
 ############# DODAC METODE DO WYKRESOW !@###############################
 
 class analyze_log():
@@ -46,7 +45,6 @@ class analyze_log():
                         break
                     else:
                         raise ValueError('!!!!WARNING!!!! Value not found')
-                        break
             if not boolean:
                 file_input = open(input_filename,'r')
                 for row in file_input:
@@ -79,15 +77,20 @@ class analyze_log():
 
     def __reg_exp_analyze(self,row):
         #print("**************************" + row)
-        patch = r'\d+\W{1}\d+\s+\w+\x2F\D{3}'
-        match = re.search(patch,row)
-        if match != None:
-            result = match.group()
+        patch_under_100 = r'\d+\W{1}\d+\s+\w+\x2F\D{3}' # ponizej 100Mbits/sec
+        patch_above_100 = r'\d+\s+\w+\x2F\D{3}' #powyzej 100 Mbits/sec
+        match_under_100 = re.search(patch_under_100,row)
+        match_above_100 = re.search(patch_above_100,row)
+
+        if match_under_100 != None:
+            result = match_under_100.group()
+        elif match_above_100 != None:
+            result = match_above_100.group()
         else:
             result = 'Not Found!'
         #print("**************************" + result)
         return result
 
-#ob = analyze_log()
-#ob.get_all_data('log0')
-#ob.get_mean_value('log0','chuj')
+# ob = analyze_log()
+# ob.get_all_data('log0')
+# ob.get_mean_value('log0','chuj')

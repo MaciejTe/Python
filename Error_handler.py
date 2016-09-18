@@ -15,7 +15,7 @@ class Error_handler:
             if(result[1]  == 0):
                 print('Repeat part of code')
             else:
-                print('You stupid motherfucker, the end. RTFM')
+                print('exc e')
 
             return result[1]
         else:

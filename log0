@@ -1,17 +1,23 @@
 ------------------------------------------------------------
-Server listening on TCP port 50000
-TCP window size: 85.3 KByte (default)
+Client connecting to 192.168.10.9, UDP port 50001
+Sending 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
 ------------------------------------------------------------
-[  8] local 192.168.10.10 port 50000 connected with 192.168.10.9 port 50295
+[  9] local 192.168.10.10 port 49030 connected with 192.168.10.9 port 50001
 [ ID] Interval       Transfer     Bandwidth
-[  8]  0.0- 1.0 sec  3.70 MBytes  31.1 Mbits/sec
-[  8]  1.0- 2.0 sec  3.83 MBytes  32.2 Mbits/sec
-[  8]  2.0- 3.0 sec  3.97 MBytes  33.3 Mbits/sec
-[  8]  3.0- 4.0 sec  4.06 MBytes  34.1 Mbits/sec
-[  8]  4.0- 5.0 sec  4.32 MBytes  36.3 Mbits/sec
-[  8]  5.0- 6.0 sec  4.68 MBytes  39.2 Mbits/sec
-[  8]  6.0- 7.0 sec  4.64 MBytes  38.9 Mbits/sec
-[  8]  7.0- 8.0 sec  4.66 MBytes  39.1 Mbits/sec
-[  8]  8.0- 9.0 sec  4.65 MBytes  39.0 Mbits/sec
-[  8]  9.0-10.0 sec  4.86 MBytes  40.8 Mbits/sec
-[  8]  0.0-10.1 sec  43.8 MBytes  36.4 Mbits/sec
+[  9]  0.0- 1.0 sec  11.7 MBytes  98.2 Mbits/sec
+[  9]  1.0- 2.0 sec  11.4 MBytes  95.4 Mbits/sec
+[  9]  2.0- 3.0 sec  11.4 MBytes  95.6 Mbits/sec
+[  9]  3.0- 4.0 sec  11.5 MBytes  96.1 Mbits/sec
+[  9]  4.0- 5.0 sec  11.4 MBytes  95.6 Mbits/sec
+[  9]  5.0- 6.0 sec  11.4 MBytes  95.5 Mbits/sec
+[  9]  6.0- 7.0 sec  11.4 MBytes  95.6 Mbits/sec
+[  9]  7.0- 8.0 sec  11.5 MBytes  96.3 Mbits/sec
+[  9]  8.0- 9.0 sec  11.3 MBytes  95.2 Mbits/sec
+[  9]  9.0-10.0 sec  11.5 MBytes  96.3 Mbits/sec
+[  9]  0.0-10.0 sec   114 MBytes  95.9 Mbits/sec
+[  9] Sent 81618 datagrams
+[  9] Server Report:
+[  9]  0.0-10.0 sec   114 MBytes  95.7 Mbits/sec   0.494 ms    0/81617 (0%)
+[  9]  0.0-10.0 sec  1 datagrams received out-of-order
+der
