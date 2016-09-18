@@ -12,7 +12,7 @@ class threads_TCP_Download(threading.Thread,iperf):
         self.__func_state = None
 
     def run(self):
-        print "Starting " + self.__threadID
+        print("Starting " + self.__threadID)
         self.__func_state = iperf.TCP_Download(self)
         ob = analyze_log()
         ob.get_mean_value(self.__filename,self.__threadID)
@@ -30,7 +30,7 @@ class threads_TCP_Upload(threading.Thread,iperf):
         self.__func_state = None
 
     def run(self):
-        print "Starting " + self.__threadID
+        print("Starting " + self.__threadID)
         self.__func_state = iperf.TCP_Upload(self)
         ob = analyze_log()
         ob.get_mean_value(self.__filename, self.__threadID)
@@ -48,7 +48,7 @@ class threads_UDP_Download(threading.Thread,iperf):
         self.__func_state = None
 
     def run(self):
-        print "Starting " + self.__threadID
+        print("Starting " + self.__threadID)
         self.__func_state = iperf.UDP_Download(self)
         ob = analyze_log()
         ob.get_mean_value(self.__filename, self.__threadID)
@@ -67,7 +67,7 @@ class threads_UDP_Upload(threading.Thread,iperf):
         self.__func_state = None
 
     def run(self):
-        print "Starting " + self.__threadID
+        print("Starting " + self.__threadID)
         self.__func_state = iperf.UDP_Upload(self)
         ob = analyze_log()
         ob.get_mean_value(self.__filename, self.__threadID)
@@ -87,7 +87,7 @@ class CPE_configuration(threading.Thread,SSH_connection):
         self.__func_state = None
 
     def run(self):
-        print "Starting " + self.__threadID
+        print("Starting " + self.__threadID)
         self.__func_state = SSH_connection.connect_to_CPE(self,self.__channel)
 
     def get_func_state(self):

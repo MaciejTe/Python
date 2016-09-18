@@ -7,7 +7,7 @@ class read_config():
         self.__list_master_ip = []
         self.__list_channels = []
         self.__list_CPE_credentials = []
-        self.__setup_filename = 'conf.txt'
+        self.__setup_filename = 'configuration.txt'
 
     def start(self):
 

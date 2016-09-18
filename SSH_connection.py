@@ -48,19 +48,19 @@ class SSH_connection():
             self.__ssh = connection.invoke_shell()
 
             output = self.__ssh.recv(10000)
-            print output
+            print(output)
 
             time.sleep(4)
             self.__ssh.send('\n' + 'interface wifi24ghz channel %s' % (channel) + '\n')
             output = self.__ssh.recv(50000)
-            print output
+            print(output)
             time.sleep(1)
             self.__ssh.send('\n' + 'co pr bo\n')
             output = self.__ssh.recv(50000)
             time.sleep(6)
             self.__ssh.send('\n' + 'exit\n')
             connection.close()
-            print output
+            print(output)
             return 0
 
         except AuthenticationException:
