@@ -5,8 +5,6 @@ class read_config():
         self.__list_username = []
         self.__list_password = []
         self.__list_master_ip = []
-        self.__list_channels = []
-        self.__list_CPE_credentials = []
         self.__setup_filename = 'conf.txt'
 
     def start(self):
@@ -25,9 +23,7 @@ class read_config():
             line = self.__analyze_block('@port@', '@username@',file,line,self.__list_port)
             line = self.__analyze_block('@username@', '@password@',file,line,self.__list_username)
             line = self.__analyze_block('@password@', '@master_ip@',file,line,self.__list_password)
-            line = self.__analyze_block('@master_ip@', '@CPE_credentials@',file,line,self.__list_master_ip)
-            line = self.__analyze_block('@CPE_credentials@', '@channels@',file,line,self.__list_CPE_credentials)
-            line = self.__analyze_block('@channels@', '@end@',file,line,self.__list_channels)
+            line = self.__analyze_block('@master_ip@', '@end@',file,line,self.__list_master_ip)
 
             file.close()
             debug_var = self.__check_content()
@@ -71,13 +67,9 @@ class read_config():
         print("Username:")
         pr(self.__list_username)
         print("Password:")
-        pr(self.__list_password)
+        pr(self.get_list_password())
         print("Master_ip:")
-        pr(self.__list_master_ip)
-        print("CPE_credentials:")
-        pr(self.__list_CPE_credentials)
-        print("Channels:")
-        pr(self.__list_channels)
+        pr(self.get_list_master_ip())
 
 
 
@@ -122,14 +114,6 @@ class read_config():
 
     def get_list_master_ip(self):
         return self.__list_master_ip
-    
-    def get_list_CPE_credentials(self):
-        return self.__list_CPE_credentials
 
-    def get_list_channels(self):
-        return self.__list_channels
-
-#ob = read_config()
-#ob.start()
-
-
+# ob = read_config()
+# ob.start()
