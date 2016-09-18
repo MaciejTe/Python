@@ -60,7 +60,7 @@ class iperf(SSH_connection):
         else:
             stdin, stdout, stderr = self.__s.exec_command('iperf -s -i 1 -u -p %s' % str(self.__port_iperf))
             time.sleep(3)
-            os.system('iperf -c %s -i 1 -u -b 100000000 -p %s |tee %s' % (self.__hostname, str(self.__port_iperf), self.__filename))
+            os.system('iperf -c %s -i 1 -u -b 200M -p %s |tee %s' % (self.__hostname, str(self.__port_iperf), self.__filename))
             time.sleep(2)
             print ("****************************************************")
             stdin, stdout, stderr = self.__s.exec_command('killall iperf')
@@ -79,7 +79,7 @@ class iperf(SSH_connection):
             os.system('iperf -s -i 1 -u -p %s | tee %s &' % (str(self.__port_iperf), self.__filename))
             time.sleep(2)
             stdin, stdout, stderr = self.__s.exec_command(
-                'iperf -c %s -i 1 -u -b 100000000 -p %s' % (self.__master_IP, str(self.__port_iperf)))
+                'iperf -c %s -i 1 -u -b 200M -p %s' % (self.__master_IP, str(self.__port_iperf)))
             print(stdout.read())
             time.sleep(2)
             print ("****************************************************")
