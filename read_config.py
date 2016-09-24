@@ -133,27 +133,56 @@
 #ob.start()
 
 from configobj import ConfigObj
-
+#
+# 1. walidacja (opcjonalnie)
+# 2. sprawdzenie ilosci hostow!!!
+# 3. hn, port, un -> wspolna iteracja po kluczach do conf_data
+#                   tworzymy slowniki
+# 4. iteracja po reszcie, dla masterIP: zmienna, reszta listy
+# 5. zwracanie slownika, albo jak go jebniemy do konstruktora to nie zwracamy :P
+#
 filename = "conf.ini"
-
 config = ConfigObj(filename)
 
-config['Hostname'] = {}
-config['Hostname']['host1'] = None
-config['Hostname']['host2'] = None
-config['Hostname']['host3'] = None
-config['Port']['port1'] = None
-config['Port']['port2'] = None
-config['Username']['username1'] = None
-config['Username']['username2'] = None
-config['Username']['username3'] = None
-config['Master_IP']['master_ip'] = None
-config['CPE_credentials']['CPE_hostname'] = 'admin'
-config['CPE_credentials']['CPE_password'] = '123'
-config['Channels']['channel1'] = '1'
-config['Channels']['channel2'] = '9'
-config['Channels']['channel3'] = '13'
 
 
-config.write()
+def create_config():
+    config['Hostname'] = {}
+    config['Hostname']['host1'] = None
+    config['Hostname']['host2'] = None
+    config['Hostname']['host3'] = None
+    config['Port'] = {}
+    config['Port']['port1'] = integer(default = 50000)
+    config['Port']['port2'] = 50001
+    config['Username'] = {}
+    config['Username']['username1'] = None
+    config['Username']['username2'] = None
+    config['Username']['username3'] = None
+    config['Master_IP'] = {}
+    config['Master_IP']['master_ip'] = None
+    config['CPE_credentials'] = {}
+    config['CPE_credentials']['CPE_hostname'] = 'admin'
+    config['CPE_credentials']['CPE_password'] = '123'
+    config['Channels'] = {}
+    config['Channels']['channel1'] = '1'
+    config['Channels']['channel2'] = '9'
+    config['Channels']['channel3'] = '13'
+
+    config.write()
+
+def read_config():
+
+
+
+
+    conf_data = {
+        'hostname': {},
+        'username': {},
+        'port': {},
+        'password': {},
+        'master_ip': {},
+        'cpe_credentials': {},
+        'channels': {}
+    }
+
 
