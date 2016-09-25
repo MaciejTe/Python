@@ -1,15 +1,14 @@
 import re
 
-############# DODAC METODE DO WYKRESOW !@###############################
 
-class analyze_log():
+class AnalyzeLog(object):
     
-    def get_all_data(self, input_filename, thread_ID):
+    def get_all_data(self, input_filename, thread_id):
         try:
             file_output_full = open('output_full.txt', 'a')
             file_input = open(input_filename, 'r')
 
-            file_output_full.write('\n\n****** ' + thread_ID + ' ******\n')
+            file_output_full.write('\n\n****** ' + thread_id + ' ******\n')
             file_output_full.writelines(file_input)
             file_output_full.close()
             file_input.close()
