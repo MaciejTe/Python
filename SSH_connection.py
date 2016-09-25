@@ -4,11 +4,14 @@ from paramiko.ssh_exception import *
 
 
 class SSH_connection():
-    def __init__(self,hostname, username,password):
-        self.__hostname = hostname
+    def __init__(self,__conf_data, host_index):
+        self.__hostname = __conf_data['hostname'][host_index]
+        self.__username = __conf_data['username'][host_index]
+        self.__password = __conf_data['password'][host_index]
+        self.__CPE_hostname = __conf_data['CPE_credentials'][0]
+        self.__CPE_username = __conf_data['CPE_credentials'][1]
+        self.__CPE_password = __conf_data['CPE_credentials'][2]
         self.__port_SSH = 22
-        self.__username = username
-        self.__password = password
         self.__ssh = None
         self.__s = None
 
@@ -44,7 +47,8 @@ class SSH_connection():
             connection = paramiko.SSHClient()
             connection.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             connection.load_system_host_keys()
-            connection.connect(self.__hostname, self.__port_SSH, self.__username, self.__password)
+            connection.connect(self.__CPE_hostname, self.__port_SSH,
+                               self.__CPE_username, self.__CPE_password)
             self.__ssh = connection.invoke_shell()
 
             output = self.__ssh.recv(10000)
