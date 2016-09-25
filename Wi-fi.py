@@ -29,11 +29,12 @@ class main(object):
     def __runThread(self, thr_desc, channel,
                     wait_switch=True, host_index=0, filename='log0'):
 
-        threads = {'CPE_conf': CPE_configuration(
-            channel,
-            host_index,
-            'CPE_configuration',
-            self.__conf_data),
+        threads = {
+            'CPE_conf': CPE_configuration(
+                channel,
+                host_index,
+                'CPE_configuration',
+                self.__conf_data),
             'TCP_upload': threads_TCP_Upload(
                 filename,
                 host_index,
@@ -139,3 +140,4 @@ ob.one_host()
 #     print('-m --> multiple(3) hosts performance test')
 
 
+#asd
