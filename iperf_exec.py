@@ -2,29 +2,27 @@ import os, time, re
 from SSH_connection import SSH_connection
 
 class iperf(SSH_connection):
-    def __init__(self, filename, hostname, username, password, port_iperf, master_IP):
-        SSH_connection.__init__(self,hostname, username,password)
-        self.__port_SSH = 22
-        self.__port_iperf = port_iperf
-        self.__master_IP = master_IP
-        self.__hostname = hostname
-        self.__username = username
-        self.__password = password
-        self.__s = None
+    def __init__(self, filename, __conf_data, host_index):
+        SSH_connection.__init__(self, __conf_data, host_index)
+        self.__port_iperf = __conf_data['port'][host_index]
+        self.__master_IP = __conf_data['master_ip'][host_index]
+        self.__hostname = __conf_data['hostname'][host_index]
+        self.__username = __conf_data['username'][host_index]
+        self.__password = __conf_data['password'][host_index]
         self.__filename = filename
+        self.__port_SSH = 22
+        self.__s = None
 
     def TCP_Download(self):
-
-        #print(SSH_connection.get_paramiko_object(self))
-        #self.list_parameters()
         self.__s = SSH_connection.connect_to_host(self)
-
         if(type(self.__s) == type(1)):
             return self.__s
         else:
-            stdin, stdout, stderr = self.__s.exec_command('iperf -s -i 1 -p %s' % str(self.__port_iperf))
+            stdin, stdout, stderr = self.__s.exec_command('iperf -s -i 1 -p %s'
+                                    % str(self.__port_iperf))
             time.sleep(3)
-            os.system('iperf -c %s -i 1 -p %s |tee %s' % (self.__hostname, str(self.__port_iperf), self.__filename))
+            os.system('iperf -c %s -i 1 -p %s |tee %s' % (self.__hostname,
+                                                          str(self.__port_iperf), self.__filename))
             time.sleep(2)
             print ("****************************************************")
             stdin, stdout, stderr = self.__s.exec_command('killall iperf')
