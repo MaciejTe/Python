@@ -1,5 +1,6 @@
 from configobj import ConfigObj
 
+
 class Configuration(object):
     FILENAME = "conf.ini"
 
