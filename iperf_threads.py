@@ -1,6 +1,6 @@
 import threading
 from iperf_exec import iperf
-from analyze_log import analyze_log
+from analyzelog import AnalyzeLog
 
 class threads_TCP_Download(threading.Thread,iperf):
 
@@ -14,7 +14,7 @@ class threads_TCP_Download(threading.Thread,iperf):
     def run(self):
         print("Starting " + self.__threadID)
         self.__func_state = iperf.TCP_Download(self)
-        ob = analyze_log()
+        ob = AnalyzeLog()
         ob.get_mean_value(self.__filename,self.__threadID)
         ob.get_all_data(self.__filename,self.__threadID)
 
@@ -32,7 +32,7 @@ class threads_TCP_Upload(threading.Thread,iperf):
     def run(self):
         print("Starting " + self.__threadID)
         self.__func_state = iperf.TCP_Upload(self)
-        ob = analyze_log()
+        ob = AnalyzeLog()
         ob.get_mean_value(self.__filename, self.__threadID)
         ob.get_all_data(self.__filename, self.__threadID)
 
@@ -50,7 +50,7 @@ class threads_UDP_Download(threading.Thread,iperf):
     def run(self):
         print("Starting " + self.__threadID)
         self.__func_state = iperf.UDP_Download(self)
-        ob = analyze_log()
+        ob = AnalyzeLog()
         ob.get_mean_value(self.__filename, self.__threadID)
         ob.get_all_data(self.__filename, self.__threadID)
 
@@ -69,7 +69,7 @@ class threads_UDP_Upload(threading.Thread,iperf):
     def run(self):
         print("Starting " + self.__threadID)
         self.__func_state = iperf.UDP_Upload(self)
-        ob = analyze_log()
+        ob = AnalyzeLog()
         ob.get_mean_value(self.__filename, self.__threadID)
         ob.get_all_data(self.__filename, self.__threadID)
 
