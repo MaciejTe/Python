@@ -1,14 +1,11 @@
-
 import time
-import threading
-from iperf_threads import threads_TCP_Download,threads_TCP_Upload
-from iperf_threads import threads_UDP_Download,threads_UDP_Upload, CPE_configuration
+
+from iperf_threads import *
 from read_config import read_config
 from Error_handler import Error_handler
-import sys
-from configuration import Configuration
 
-class main(object):
+
+class Main(object):
 
     def __init__(self):
         read = read_config()
@@ -26,8 +23,8 @@ class main(object):
 
         self.__err_handler = Error_handler()
 
-    def __runThread(self, thr_desc, channel,
-                    wait_switch=True, host_index=0, filename='log0'):
+    def run_thread(self, thr_desc, channel, wait_switch=True,
+                   host_index=0, filename='log0'):
 
         threads = {
             'CPE_conf': CPE_configuration(
@@ -77,14 +74,14 @@ class main(object):
         except:
             pass
         finally:
-            self.__waitForThread(wait_switch)
+            self.wait_for_thread(wait_switch)
 
-    def __waitForThread(self, switch=True):
+    def wait_for_thread(self, switch=True):
         if switch:
             while len(threading.enumerate()) is not 1:
                 pass
 
-    def __writeDescription(self, description, hosts_amount='ONE_HOST'):
+    def write_description(self, description, hosts_amount='ONE_HOST'):
         try:
             blank_lines = ('\n', '\n\n\n')
             select_blanklns = 0
@@ -107,16 +104,16 @@ class main(object):
 
     def one_host(self):
         try:
-            self.__writeDescription('START')
+            self.write_description('START')
 
             for channel in self.__conf_data['channels']:
-                self.__runThread('CPE_conf', channel)
-                self.__runThread('TCP_upload', channel)
-                self.__runThread('TCP_download', channel)
-                self.__runThread('UDP_upload', channel)
-                self.__runThread('UDP_download', channel)
+                self.run_thread('CPE_conf', channel)
+                self.run_thread('TCP_upload', channel)
+                self.run_thread('TCP_download', channel)
+                self.run_thread('UDP_upload', channel)
+                self.run_thread('UDP_download', channel)
 
-            self.__writeDescription('END')
+            self.write_description('END')
 
 
         except:
@@ -124,10 +121,10 @@ class main(object):
             pass
 
 
-ob = main()
+ob = Main()
 ob.one_host()
 
-#sdfsdfsdf*****************************************
+#
 # if(args_len == 1):
 #     print('Application takes exactly one argument: -s or -m')
 #     print('-h or --help --> Help')

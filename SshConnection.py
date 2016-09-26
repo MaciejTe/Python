@@ -3,7 +3,9 @@ import time
 from paramiko.ssh_exception import *
 
 
-class SSH_connection():
+class SshConnection(object):
+    PARAMIKO_FILE = 'paramiko.log'
+
     def __init__(self,__conf_data, host_index):
         self.__hostname = __conf_data['hostname'][host_index]
         self.__username = __conf_data['username'][host_index]
@@ -15,16 +17,15 @@ class SSH_connection():
         self.__ssh = None
         self.__s = None
 
-
     def connect_to_host(self):
         try:
-            paramiko.util.log_to_file('paramiko.log')
+            paramiko.util.log_to_file(self.PARAMIKO_FILE)
             self.__s = paramiko.SSHClient()
             self.__s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             self.__s.load_system_host_keys()
-            self.__s.connect(self.__hostname, self.__port_SSH, self.__username, self.__password)
+            self.__s.connect(self.__hostname, self.__port_SSH,
+                             self.__username, self.__password)
             return self.__s
-
 
         except BadAuthenticationType:
             print('bad_auth')
@@ -39,11 +40,11 @@ class SSH_connection():
             self.__s.close()
             return 103
 
-    def connect_to_CPE(self,channel):
-        connection = None
+    def connect_to_cpe(self, channel):
+        connection = None  # ????????
 
         try:
-            paramiko.util.log_to_file('paramiko.log')
+            paramiko.util.log_to_file(self.PARAMIKO_FILE)
             connection = paramiko.SSHClient()
             connection.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             connection.load_system_host_keys()
@@ -55,7 +56,8 @@ class SSH_connection():
             print(output)
 
             time.sleep(4)
-            self.__ssh.send('\n' + 'interface wifi24ghz channel %s' % (channel) + '\n')
+            self.__ssh.send('\n' + 'interface wifi24ghz channel %s'
+                            % channel + '\n')
             output = self.__ssh.recv(50000)
             print(output)
             time.sleep(1)

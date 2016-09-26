@@ -1,9 +1,15 @@
-import os, time, re
-from SSH_connection import SSH_connection
+import os
+import time
 
-class iperf(SSH_connection):
+from SshConnection import SshConnection
+
+
+class Iperf(object, SshConnection):
+    # DECORATOR = "****************************************************"
+    Decorator = ('*' * 52)
+
     def __init__(self, filename, __conf_data, host_index):
-        SSH_connection.__init__(self, __conf_data, host_index)
+        SshConnection.__init__(self, __conf_data, host_index)
         self.__port_iperf = __conf_data['port'][host_index]
         self.__master_IP = __conf_data['master_ip'][host_index]
         self.__hostname = __conf_data['hostname'][host_index]
@@ -13,79 +19,112 @@ class iperf(SSH_connection):
         self.__port_SSH = 22
         self.__s = None
 
-    def TCP_Download(self):
-        self.__s = SSH_connection.connect_to_host(self)
-        if(type(self.__s) == type(1)):
-            return self.__s
+    def tcp_download(self):
+        self.__s = SshConnection.connect_to_host(self)
+
+        if type(self.__s) is int:
+            result = self.__s
         else:
-            stdin, stdout, stderr = self.__s.exec_command('iperf -s -i 1 -p %s'
+            stdin, stdout, stderr = self.__s.exec_command(
+                                    'iperf -s -i 1 -p %s'
                                     % str(self.__port_iperf))
             time.sleep(3)
-            os.system('iperf -c %s -i 1 -p %s |tee %s' % (self.__hostname,
-                                                          str(self.__port_iperf), self.__filename))
-            time.sleep(2)
-            print ("****************************************************")
-            stdin, stdout, stderr = self.__s.exec_command('killall iperf')
-            self.__s.close()
-            #stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
-            return 0
+            os.system('iperf -c %s -i 1 -p %s |tee %s' %
+                      (self.__hostname,
+                       str(self.__port_iperf),
+                       self.__filename))
 
-    def TCP_Upload(self):
-        self.__s = SSH_connection.connect_to_host(self)
-
-        if (type(self.__s) == type(1)):
-            return self.__s
-        else:
-            os.system('iperf -s -i 1 -p %s | tee %s &' % (str(self.__port_iperf), self.__filename))
             time.sleep(2)
-            stdin, stdout, stderr = self.__s.exec_command('iperf -c %s -i 1 -p %s' % (self.__master_IP, str(self.__port_iperf)))
-            print(stdout.read())
-            time.sleep(2)
-            print ("****************************************************")
-            os.system('killall iperf')
-            self.__s.close()
-            #stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
-            #os.system('ps ax|grep iperf')
-            return 0
-
-    def UDP_Download(self):
-        self.__s = SSH_connection.connect_to_host(self)
-
-        if (self.__s == -1):
-            return -1
-        elif (self.__s == -2):
-            return -2
-        else:
-            stdin, stdout, stderr = self.__s.exec_command('iperf -s -i 1 -u -p %s' % str(self.__port_iperf))
-            time.sleep(3)
-            os.system('iperf -c %s -i 1 -u -b 200M -p %s |tee %s' % (self.__hostname, str(self.__port_iperf), self.__filename))
-            time.sleep(2)
-            print ("****************************************************")
+            print(self.DECORATOR)
             stdin, stdout, stderr = self.__s.exec_command('killall iperf')
             self.__s.close()
             # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
-            return 0
+            result = 0
 
-    def UDP_Upload(self):
-        self.__s = SSH_connection.connect_to_host(self)
+        return result
 
-        if (self.__s == -1):
-            return -1
-        elif(self.__s == -2):
-            return -2
+    def tcp_upload(self):
+        self.__s = SshConnection.connect_to_host(self)
+
+        if type(self.__s) is int:
+            result = self.__s
         else:
-            os.system('iperf -s -i 1 -u -p %s | tee %s &' % (str(self.__port_iperf), self.__filename))
+            os.system('iperf -s -i 1 -p %s | tee %s &' %
+                      (str(self.__port_iperf), self.__filename))
             time.sleep(2)
             stdin, stdout, stderr = self.__s.exec_command(
-                'iperf -c %s -i 1 -u -b 200M -p %s' % (self.__master_IP, str(self.__port_iperf)))
+                                    'iperf -c %s -i 1 -p %s' %
+                                    (self.__master_IP, str(self.__port_iperf)))
+
             print(stdout.read())
             time.sleep(2)
-            print ("****************************************************")
+            print(self.DECORATOR)
             os.system('killall iperf')
             self.__s.close()
             # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
-            return 0
+            # os.system('ps ax|grep iperf')
+            result = 0
+
+        return result
+
+    def udp_download(self):
+        self.__s = SshConnection.connect_to_host(self)
+
+        if self.__s is -1:
+            result =  -1
+        elif self.__s is -2:
+            result =  -2
+        else:
+            stdin, stdout, stderr = self.__s.exec_command(
+                        'iperf -s -i 1 -u -p %s' % str(self.__port_iperf))
+
+            time.sleep(3)
+            os.system('iperf -c %s -i 1 -u -b 200M -p %s |tee %s' %
+                     (self.__hostname,
+                      str(self.__port_iperf),
+                      self.__filename))
+
+            time.sleep(2)
+            print(self.DECORATOR)
+            stdin, stdout, stderr = self.__s.exec_command('killall iperf')
+            self.__s.close()
+            # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
+            result = 0
+
+        return result
+
+    def udp_upload(self):
+        self.__s = SshConnection.connect_to_host(self)
+
+        if self.__s is -1:
+            result = -1
+        elif self.__s is -2:
+            result = -2
+        else:
+            os.system('iperf -s -i 1 -u -p %s | tee %s &' %
+                      (str(self.__port_iperf), self.__filename))
+
+            time.sleep(2)
+            stdin, stdout, stderr = self.__s.exec_command(
+                'iperf -c %s -i 1 -u -b 200M -p %s' %
+                (self.__master_IP, str(self.__port_iperf)))
+
+            print(stdout.read())
+            time.sleep(2)
+            print (self.DECORATOR)
+            os.system('killall iperf')
+            self.__s.close()
+            # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
+            result = 0
+
+        return result
 
     def list_parameters(self):
-        print(self.__hostname,self.__port_iperf,self.__port_SSH,self.__username,self.__password,self.__master_IP,self.__s)
+        print(self.__hostname,
+              self.__port_iperf,
+              self.__port_SSH,
+              self.__username,
+              self.__password,
+              self.__master_IP,
+              self.__s)
 
