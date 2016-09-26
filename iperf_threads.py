@@ -4,8 +4,8 @@ from analyzelog import AnalyzeLog
 
 class threads_TCP_Download(threading.Thread, Iperf):
 
-    def __init__(self,filename, host_index, threadID, __conf_data):
-        Iperf.__init__(self, filename, __conf_data, host_index)
+    def __init__(self, filename, host_index, threadID, conf_data):
+        Iperf.__init__(self, filename, conf_data, host_index)
         threading.Thread.__init__(self)
         self.__threadID = threadID
         self.__filename = filename
@@ -22,8 +22,8 @@ class threads_TCP_Download(threading.Thread, Iperf):
         return self.__func_state
 
 class threads_TCP_Upload(threading.Thread, Iperf):
-    def __init__(self,filename, host_index, threadID, __conf_data):
-        Iperf.__init__(self, filename, __conf_data, host_index)
+    def __init__(self, filename, host_index, threadID, conf_data):
+        Iperf.__init__(self, filename, conf_data, host_index)
         threading.Thread.__init__(self)
         self.__threadID = threadID
         self.__filename = filename
@@ -40,8 +40,8 @@ class threads_TCP_Upload(threading.Thread, Iperf):
         return self.__func_state
 
 class threads_UDP_Download(threading.Thread, Iperf):
-    def __init__(self,filename, host_index, threadID, __conf_data):
-        Iperf.__init__(self, filename, __conf_data, host_index)
+    def __init__(self, filename, host_index, threadID, conf_data):
+        Iperf.__init__(self, filename, conf_data, host_index)
         threading.Thread.__init__(self)
         self.__threadID = threadID
         self.__filename = filename
@@ -59,8 +59,8 @@ class threads_UDP_Download(threading.Thread, Iperf):
 
 
 class threads_UDP_Upload(threading.Thread, Iperf):
-    def __init__(self,filename, host_index, threadID, __conf_data):
-        Iperf.__init__(self, filename, __conf_data, host_index)
+    def __init__(self, filename, host_index, threadID, conf_data):
+        Iperf.__init__(self, filename, conf_data, host_index)
         threading.Thread.__init__(self)
         self.__threadID = threadID
         self.__filename = filename
@@ -79,8 +79,8 @@ class threads_UDP_Upload(threading.Thread, Iperf):
 from SshConnection import SshConnection
 
 class CPE_configuration(threading.Thread, SshConnection):
-    def __init__(self, channel, host_index, threadID, __conf_data):
-        SshConnection.__init__(self, __conf_data, host_index)
+    def __init__(self, channel, host_index, threadID, conf_data):
+        SshConnection.__init__(self, conf_data, host_index)
         threading.Thread.__init__(self)
         self.__threadID = threadID
         self.__channel = channel

@@ -8,13 +8,13 @@ class Iperf(object, SshConnection):
     # DECORATOR = "****************************************************"
     Decorator = ('*' * 52)
 
-    def __init__(self, filename, __conf_data, host_index):
-        SshConnection.__init__(self, __conf_data, host_index)
-        self.__port_iperf = __conf_data['port'][host_index]
-        self.__master_IP = __conf_data['master_ip'][host_index]
-        self.__hostname = __conf_data['hostname'][host_index]
-        self.__username = __conf_data['username'][host_index]
-        self.__password = __conf_data['password'][host_index]
+    def __init__(self, filename, conf_data, host_index):
+        SshConnection.__init__(self, conf_data, host_index)
+        self.__port_iperf = conf_data['port'][host_index]
+        self.__master_IP = conf_data['master_ip'][host_index]
+        self.__hostname = conf_data['hostname'][host_index]
+        self.__username = conf_data['username'][host_index]
+        self.__password = conf_data['password'][host_index]
         self.__filename = filename
         self.__port_SSH = 22
         self.__s = None
