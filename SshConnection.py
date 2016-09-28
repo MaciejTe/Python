@@ -71,7 +71,7 @@ class SshConnection(object):
                     error code (int) otherwise.
 
         """
-        #connection = None  # ????????
+        connection = None  # ????????
 
         try:
             paramiko.util.log_to_file(self.PARAMIKO_FILE)
@@ -97,15 +97,18 @@ class SshConnection(object):
             self.ssh.send('\n' + 'exit\n')
             print(output)
             result = 0
+            connection.close()
 
         except AuthenticationException:
             print('Incorrect username or password for CPE')
             result = 104
+            connection.close()
         except Exception as e:
             print(e)
             result = 105
-        finally:
             connection.close()
+        # finally:
+        #     connection.close()
 
         return result
 

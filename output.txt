@@ -26,3 +26,11 @@ CH13_TCP_D_192.168.10.9	21.6 Mbits/sec
 CH13_UDP_U_192.168.10.9	0.00 bits/sec
 CH13_UDP_D_192.168.10.9	20.8 Mbits/sec
 *** END - ONE_HOST *******************
+*** START - ONE_HOST *******************
+CH1_TCP_U_192.168.10.9	20.8 Mbits/sec
+CH1_TCP_D_192.168.10.9	20.8 Mbits/sec
+*** END - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************

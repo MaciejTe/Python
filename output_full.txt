@@ -553,3 +553,99 @@ UDP buffer size:  208 KByte (default)
 [  7]  0.0-10.1 sec  25.0 MBytes  20.8 Mbits/sec   2.792 ms    2/17808 (0.011%)
 [  7]  0.0-10.1 sec  3 datagrams received out-of-order
 ********** END - ONE_HOST *******************
+********** START - ONE_HOST *******************
+
+
+****** CH1_TCP_U_192.168.10.9 ******
+------------------------------------------------------------
+Client connecting to 192.168.10.9, UDP port 50000
+Sending 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  7] local 192.168.10.5 port 47426 connected with 192.168.10.9 port 50000
+[ ID] Interval       Transfer     Bandwidth
+[  7]  0.0- 1.0 sec  2.22 MBytes  18.6 Mbits/sec
+[  7]  1.0- 2.0 sec  3.23 MBytes  27.1 Mbits/sec
+[  7]  2.0- 3.0 sec  3.27 MBytes  27.4 Mbits/sec
+[  7]  3.0- 4.0 sec  2.60 MBytes  21.9 Mbits/sec
+[  7]  4.0- 5.0 sec  2.36 MBytes  19.8 Mbits/sec
+[  7]  5.0- 6.0 sec  2.42 MBytes  20.3 Mbits/sec
+[  7]  6.0- 7.0 sec  2.13 MBytes  17.8 Mbits/sec
+[  7]  7.0- 8.0 sec  2.18 MBytes  18.3 Mbits/sec
+[  7]  8.0- 9.0 sec  2.20 MBytes  18.5 Mbits/sec
+[  7]  9.0-10.0 sec  2.36 MBytes  19.8 Mbits/sec
+[  7]  0.0-10.0 sec  25.0 MBytes  20.9 Mbits/sec
+[  7] Sent 17809 datagrams
+[  7] Server Report:
+[  7]  0.0-10.1 sec  25.0 MBytes  20.8 Mbits/sec   2.792 ms    2/17808 (0.011%)
+[  7]  0.0-10.1 sec  3 datagrams received out-of-order
+
+
+****** CH1_TCP_D_192.168.10.9 ******
+------------------------------------------------------------
+Client connecting to 192.168.10.9, UDP port 50000
+Sending 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  7] local 192.168.10.5 port 47426 connected with 192.168.10.9 port 50000
+[ ID] Interval       Transfer     Bandwidth
+[  7]  0.0- 1.0 sec  2.22 MBytes  18.6 Mbits/sec
+[  7]  1.0- 2.0 sec  3.23 MBytes  27.1 Mbits/sec
+[  7]  2.0- 3.0 sec  3.27 MBytes  27.4 Mbits/sec
+[  7]  3.0- 4.0 sec  2.60 MBytes  21.9 Mbits/sec
+[  7]  4.0- 5.0 sec  2.36 MBytes  19.8 Mbits/sec
+[  7]  5.0- 6.0 sec  2.42 MBytes  20.3 Mbits/sec
+[  7]  6.0- 7.0 sec  2.13 MBytes  17.8 Mbits/sec
+[  7]  7.0- 8.0 sec  2.18 MBytes  18.3 Mbits/sec
+[  7]  8.0- 9.0 sec  2.20 MBytes  18.5 Mbits/sec
+[  7]  9.0-10.0 sec  2.36 MBytes  19.8 Mbits/sec
+[  7]  0.0-10.0 sec  25.0 MBytes  20.9 Mbits/sec
+[  7] Sent 17809 datagrams
+[  7] Server Report:
+[  7]  0.0-10.1 sec  25.0 MBytes  20.8 Mbits/sec   2.792 ms    2/17808 (0.011%)
+[  7]  0.0-10.1 sec  3 datagrams received out-of-order
+
+
+****** CH9_TCP_U_192.168.10.9 ******
+------------------------------------------------------------
+Server listening on UDP port 50000
+Receiving 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+
+
+****** CH9_TCP_D_192.168.10.9 ******
+------------------------------------------------------------
+Server listening on UDP port 50000
+Receiving 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+
+
+****** CH13_TCP_U_192.168.10.9 ******
+------------------------------------------------------------
+Server listening on UDP port 50000
+Receiving 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+
+
+****** CH13_TCP_D_192.168.10.9 ******
+------------------------------------------------------------
+Server listening on UDP port 50000
+Receiving 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+********** END - ONE_HOST *******************
+********** START - ONE_HOST *******************
+********** START - ONE_HOST *******************
+********** START - ONE_HOST *******************
+********** START - ONE_HOST *******************
+
+
+****** CH1_TCP_U_192.168.10.9 ******
+------------------------------------------------------------
+Server listening on UDP port 50000
+Receiving 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
