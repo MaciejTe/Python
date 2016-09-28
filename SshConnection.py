@@ -4,13 +4,13 @@ from paramiko.ssh_exception import *
 
 
 class SshConnection(object):
-    """Class for create SSH connection with hosts and CPE"""
+    """Class for create SSH connection with hosts and CPE."""
 
     # GLOBAL CONSTANTS
     PARAMIKO_FILE = 'paramiko.log'
 
     def __init__(self, conf_data, host_index):
-        """Set up the necessary credentials
+        """Set up the necessary credentials.
 
         Args:
             conf_data (dict): set up data
@@ -45,26 +45,28 @@ class SshConnection(object):
             self.s.connect(self.hostname, self.port_SSH,
                            self.username, self.password)
             result = self.s
+            self.s.close()
 
         except BadAuthenticationType:
             print('bad_auth')
             result = 101
+            self.s.close()
         except AuthenticationException:
             print('auth_exc')
             result = 102
+            self.s.close()
         except Exception as e:
             print(e)
             result = 103
-        finally:
             self.s.close()
 
         return result
 
     def connect_to_cpe(self, channel):
-        """Set the ssh connection for CPE
+        """Set the ssh connection for CPE.
 
         Args:
-            channel (int): router channel
+            channel (int): router channel.
 
         Returns:
             result: 0 (int) for success,
