@@ -5,8 +5,8 @@ from SshConnection import SshConnection
 
 
 class Iperf(SshConnection):
-    # DECORATOR = "****************************************************"
-    DECORATOR = ('*' * 52)
+    DECORATOR = "****************************************************"
+    #DECORATOR = ('*' * 52)
 
     def __init__(self, filename, conf_data, host_index):
         SshConnection.__init__(self, conf_data, host_index)

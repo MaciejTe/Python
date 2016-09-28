@@ -649,3 +649,40 @@ Server listening on UDP port 50000
 Receiving 1470 byte datagrams
 UDP buffer size:  208 KByte (default)
 ------------------------------------------------------------
+********** START - ONE_HOST *******************
+
+
+****** CH1_TCP_U_192.168.10.9 ******
+------------------------------------------------------------
+Server listening on UDP port 50000
+Receiving 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+
+
+****** CH1_TCP_D_192.168.10.9 ******
+------------------------------------------------------------
+Server listening on UDP port 50000
+Receiving 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+
+
+****** CH9_TCP_U_192.168.10.9 ******
+------------------------------------------------------------
+Server listening on UDP port 50000
+Receiving 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+
+
+****** CH9_TCP_D_192.168.10.9 ******
+------------------------------------------------------------
+Server listening on UDP port 50000
+Receiving 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+********** START - ONE_HOST *******************
+********** START - ONE_HOST *******************
+********** START - ONE_HOST *******************
+********** START - ONE_HOST *******************
