@@ -1,2 +1,8 @@
 $ cat .gitignore
 .idea/*
+*.pyc
+tests/paramiko.log
+paramiko.log
+output.txt
+output_full.txt
+log0
