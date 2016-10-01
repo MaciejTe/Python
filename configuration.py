@@ -6,10 +6,10 @@ class Configuration(object):
 
     def __init__(self):
         self.config = ConfigObj(self.FILENAME)
-        self.conf_data = dict(self.config)
+        self.raw_conf_data = dict(self.config)
+        self.conf_data = self.change_data_struct()
         if not(self.validation()):
             self.conf_data = None
-        print(self.conf_data)
 
 
     def validation(self):
@@ -32,9 +32,26 @@ class Configuration(object):
 
         return result
 
+    def change_data_struct(self):
+        structure = {}
+        temp_list = []
+
+        for key in self.raw_conf_data:
+            for inner_key in self.raw_conf_data[key]:
+                temp_list.append(self.raw_conf_data[key][inner_key])
+            structure.update({key: temp_list})
+            temp_list = []
+
+        return structure
+
+
+        #print(__conf_data)
+
 
 
 
 ob = Configuration()
+#ob.test()
+
 #ob.read_config()
 #ob.validation()
