@@ -3,24 +3,17 @@ import time
 from iperf_threads import *
 from read_config import read_config
 from Error_handler import Error_handler
-
+from configuration import Configuration
 
 class Main(object):
 
     def __init__(self):
-        read = read_config()
-        read.start()
-
-        self.__conf_data = {
-            'hostname': read.get_list_hostname(),
-            'username': read.get_list_username(),
-            'port': read.get_list_port(),
-            'password': read.get_list_password(),
-            'master_ip': read.get_list_master_ip(),
-            'CPE_credentials': read.get_list_CPE_credentials(),
-            'channels': read.get_list_channels()
-        }
-
+        # read = read_config()
+        # read.start()
+        configuration = Configuration()
+        self.conf_data = configuration.conf_data
+        #print(self.__conf_data.conf_data['Hostname'])
+        print(self.conf_data['Hostname'][0])
         self.__err_handler = Error_handler()
 
     def run_thread(self, thr_desc, channel, wait_switch=True,
@@ -31,39 +24,39 @@ class Main(object):
                 channel,
                 host_index,
                 'CPE_configuration',
-                self.__conf_data),
+                self.conf_data),
             'TCP_upload': threads_TCP_Upload(
                 filename,
                 host_index,
                 "CH%s_TCP_U_%s" % (
                     str(channel),
-                    str(self.__conf_data
-                        ['hostname'][host_index])),
-                self.__conf_data),
+                    str(self.conf_data.conf_data
+                        ['Hostname'][host_index])),
+                self.conf_data),
             'TCP_download': threads_TCP_Download(
                 filename,
                 host_index,
                 "CH%s_TCP_D_%s" % (
                     str(channel),
-                    str(self.__conf_data
-                        ['hostname'][host_index])),
-                self.__conf_data),
+                    str(self.conf_data.conf_data
+                        ['Hostname'][host_index])),
+                self.conf_data),
             'UDP_upload': threads_UDP_Upload(
                 filename,
                 host_index,
                 "CH%s_UDP_U_%s" % (
                     str(channel),
-                    str(self.__conf_data
-                        ['hostname'][host_index])),
-                self.__conf_data),
+                    str(self.conf_data.conf_data
+                        ['Hostname'][host_index])),
+                self.conf_data),
             'UDP_download': threads_UDP_Download(
                 filename,
                 host_index,
                 "CH%s_UDP_D_%s" % (
                     str(channel),
-                    str(self.__conf_data
-                        ['hostname'][host_index])),
-                self.__conf_data)
+                    str(self.conf_data.conf_data
+                        ['Hostname'][host_index])),
+                self.conf_data)
         }
 
         try:
@@ -106,7 +99,9 @@ class Main(object):
         try:
             self.write_description('START')
 
-            for channel in self.__conf_data['channels']:
+            for channel in self.conf_data['Channels']:
+                #nie wyciagam tutaj wartosci tylko klucz?
+                print(channel)
                 self.run_thread('CPE_conf', channel)
                 self.run_thread('TCP_upload', channel)
                 self.run_thread('TCP_download', channel)
@@ -116,7 +111,9 @@ class Main(object):
             self.write_description('END')
 
 
-        except:
+        except Exception as e:
+            print(e)
+
             # Obsluga bledow!
             pass
 

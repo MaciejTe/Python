@@ -109,6 +109,8 @@ class SshConnection(object):
             print(e)
             result = 105
             connection.close()
+        # finally:
+        #     connection.close()
 
         return result
 

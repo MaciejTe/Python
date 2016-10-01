@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 DEB [20160928-21:21:46.485] thr=1   paramiko.transport: starting thread (client mode): 0x905dcf90L
 DEB [20160928-21:21:46.486] thr=1   paramiko.transport: Local version/idstring: SSH-2.0-paramiko_1.16.0
 DEB [20160928-21:21:46.493] thr=1   paramiko.transport: Remote version/idstring: SSH-2.0-dropbear_2014.65
@@ -96,3 +98,4 @@ DEB [20160928-21:22:29.568] thr=11  paramiko.transport: Secsh channel 0 opened.
 DEB [20160928-21:22:29.572] thr=11  paramiko.transport: [chan 0] Sesch channel 0 request ok
 DEB [20160928-21:22:29.589] thr=11  paramiko.transport: [chan 0] Sesch channel 0 request ok
 DEB [20160928-21:22:40.620] thr=11  paramiko.transport: EOF in transport thread
+>>>>>>> 6d3c47b9803472ae7fde1ca5b27427e3e2a4e518
