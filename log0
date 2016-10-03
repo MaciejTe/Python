@@ -1,5 +1,4 @@
 ------------------------------------------------------------
-Server listening on UDP port 50000
-Receiving 1470 byte datagrams
-UDP buffer size:  208 KByte (default)
+Server listening on TCP port 50000
+TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------

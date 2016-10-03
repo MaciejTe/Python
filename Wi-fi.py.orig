@@ -29,29 +29,53 @@ class Main(object):
                 host_index,
                 "CH%s_TCP_U_%s" % (
                     str(channel),
+<<<<<<< HEAD
+                    str(self.conf_data
+                        ['Hostname'][host_index])),
+                self.conf_data),
+=======
                     str(self.conf_data['Hostname'][host_index])),
                         self.conf_data),
+>>>>>>> 1863c4c1f7c471aa53d68dd42963b37aad48d3c8
             'TCP_download': threads_TCP_Download(
                 filename,
                 host_index,
                 "CH%s_TCP_D_%s" % (
                     str(channel),
+<<<<<<< HEAD
+                    str(self.conf_data
+                        ['Hostname'][host_index])),
+                self.conf_data),
+=======
                     str(self.conf_data['Hostname'][host_index])),
                         self.conf_data),
+>>>>>>> 1863c4c1f7c471aa53d68dd42963b37aad48d3c8
             'UDP_upload': threads_UDP_Upload(
                 filename,
                 host_index,
                 "CH%s_UDP_U_%s" % (
                     str(channel),
+<<<<<<< HEAD
+                    str(self.conf_data
+                        ['Hostname'][host_index])),
+                self.conf_data),
+=======
                     str(self.conf_data['Hostname'][host_index])),
                         self.conf_data),
+>>>>>>> 1863c4c1f7c471aa53d68dd42963b37aad48d3c8
             'UDP_download': threads_UDP_Download(
                 filename,
                 host_index,
                 "CH%s_UDP_D_%s" % (
                     str(channel),
+<<<<<<< HEAD
+                    str(self.conf_data
+                        ['Hostname'][host_index])),
+                self.conf_data)
+=======
                     str(self.conf_data['Hostname'][host_index])),
                         self.conf_data)
+>>>>>>> 1863c4c1f7c471aa53d68dd42963b37aad48d3c8
         }
 
         try:
@@ -93,9 +117,11 @@ class Main(object):
     def one_host(self):
         try:
             self.write_description('START')
-
             for channel in self.conf_data['Channels']:
+<<<<<<< HEAD
                 #nie wyciagam tutaj wartosci tylko klucz?
+=======
+>>>>>>> 1863c4c1f7c471aa53d68dd42963b37aad48d3c8
                 self.run_thread('CPE_conf', channel)
                 self.run_thread('TCP_upload', channel)
                 self.run_thread('TCP_download', channel)
@@ -106,7 +132,11 @@ class Main(object):
 
 
         except Exception as e:
+<<<<<<< HEAD
+            print(e, 'asa')
+=======
             print(e,'asd')
+>>>>>>> 1863c4c1f7c471aa53d68dd42963b37aad48d3c8
 
             # Obsluga bledow!
             
@@ -126,6 +156,9 @@ ob.one_host()
 # elif(sys.argv[1] == '-h' or sys.argv[1] == '--help'):
 #     print('Usage:\n -s --> single host performance test')
 #     print('-m --> multiple(3) hosts performance test')
+<<<<<<< HEAD
 
 
 #asd
+=======
+>>>>>>> 1863c4c1f7c471aa53d68dd42963b37aad48d3c8

@@ -28,3 +28,14 @@
 *** START - ONE_HOST *******************
 *** START - ONE_HOST *******************
 *** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+*** START - ONE_HOST *******************
+CH1_TCP_D_192.168.10.9	 39.9 Mbits/sec
+CH1_UDP_D_192.168.10.9	48.5 Mbits/sec
