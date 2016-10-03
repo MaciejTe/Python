@@ -10,7 +10,7 @@ class Error_handler:
     def err_search(self, err_code):
         if(err_code in self.__err_dict):
             result = self.__err_dict[err_code]
-            print(result[0])
+            #print(result[0])
 
             if(result[1]  == 0):
                 print('Repeat part of code')

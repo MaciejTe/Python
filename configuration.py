@@ -50,7 +50,7 @@ class Configuration(object):
 
 
 
-ob = Configuration()
+#ob = Configuration()
 #ob.test()
 
 #ob.read_config()

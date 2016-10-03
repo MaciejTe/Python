@@ -45,7 +45,6 @@ class SshConnection(object):
             self.s.connect(self.hostname, self.port_SSH,
                            self.username, self.password)
             result = self.s
-            self.s.close()
 
         except BadAuthenticationType:
             print('bad_auth')
@@ -99,7 +98,6 @@ class SshConnection(object):
             self.ssh.send('\n' + 'exit\n')
             print(output)
             result = 0
-            connection.close()
 
         except AuthenticationException:
             print('Incorrect username or password for CPE')
