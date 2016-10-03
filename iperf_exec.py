@@ -124,7 +124,8 @@ class Iperf(SshConnection):
               self.__master_IP,
               self.__s)
 
-from configuration import Configuration
-b = Configuration()
-x = Iperf('log0', b.conf_data, 0)
-x.tcp_upload()
+
+# from configuration import Configuration
+# b = Configuration()
+# x = Iperf('log0', b.conf_data, 0)
+# x.tcp_upload()
