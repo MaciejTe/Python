@@ -18,9 +18,12 @@ class SshConnection(object):
 
         """
 
-        self.hostname = conf_data['hostname'][host_index]
-        self.username = conf_data['username'][host_index]
-        self.password = conf_data['password'][host_index]
+        self.hostname = '192.168.10.9'
+        self.username = 'maciek'
+        self.password = 'eysuaaty'
+        #self.hostname = conf_data['Hostname'][host_index]
+        #self.username = conf_data['Username'][host_index]
+        #self.password = conf_data['Password'][host_index]
         self.CPE_hostname = conf_data['CPE_credentials'][0]
         self.CPE_username = conf_data['CPE_credentials'][1]
         self.CPE_password = conf_data['CPE_credentials'][2]
@@ -45,7 +48,6 @@ class SshConnection(object):
             self.s.connect(self.hostname, self.port_SSH,
                            self.username, self.password)
             result = self.s
-            self.s.close()
 
         except BadAuthenticationType:
             print('bad_auth')

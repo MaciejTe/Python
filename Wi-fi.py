@@ -12,8 +12,6 @@ class Main(object):
         # read.start()
         configuration = Configuration()
         self.conf_data = configuration.conf_data
-        #print(self.__conf_data.conf_data['Hostname'])
-        print(self.conf_data['Hostname'][0])
         self.__err_handler = Error_handler()
 
     def run_thread(self, thr_desc, channel, wait_switch=True,
@@ -30,33 +28,29 @@ class Main(object):
                 host_index,
                 "CH%s_TCP_U_%s" % (
                     str(channel),
-                    str(self.conf_data.conf_data
-                        ['Hostname'][host_index])),
-                self.conf_data),
+                    str(self.conf_data['Hostname'][host_index])),
+                        self.conf_data),
             'TCP_download': threads_TCP_Download(
                 filename,
                 host_index,
                 "CH%s_TCP_D_%s" % (
                     str(channel),
-                    str(self.conf_data.conf_data
-                        ['Hostname'][host_index])),
-                self.conf_data),
+                    str(self.conf_data['Hostname'][host_index])),
+                        self.conf_data),
             'UDP_upload': threads_UDP_Upload(
                 filename,
                 host_index,
                 "CH%s_UDP_U_%s" % (
                     str(channel),
-                    str(self.conf_data.conf_data
-                        ['Hostname'][host_index])),
-                self.conf_data),
+                    str(self.conf_data['Hostname'][host_index])),
+                        self.conf_data),
             'UDP_download': threads_UDP_Download(
                 filename,
                 host_index,
                 "CH%s_UDP_D_%s" % (
                     str(channel),
-                    str(self.conf_data.conf_data
-                        ['Hostname'][host_index])),
-                self.conf_data)
+                    str(self.conf_data['Hostname'][host_index])),
+                        self.conf_data)
         }
 
         try:
@@ -100,8 +94,6 @@ class Main(object):
             self.write_description('START')
 
             for channel in self.conf_data['Channels']:
-                #nie wyciagam tutaj wartosci tylko klucz?
-                print(channel)
                 self.run_thread('CPE_conf', channel)
                 self.run_thread('TCP_upload', channel)
                 self.run_thread('TCP_download', channel)
@@ -112,7 +104,7 @@ class Main(object):
 
 
         except Exception as e:
-            print(e)
+            print(e,'asd')
 
             # Obsluga bledow!
             pass
@@ -132,6 +124,3 @@ ob.one_host()
 # elif(sys.argv[1] == '-h' or sys.argv[1] == '--help'):
 #     print('Usage:\n -s --> single host performance test')
 #     print('-m --> multiple(3) hosts performance test')
-
-
-#asd

@@ -50,9 +50,11 @@ class Iperf(SshConnection):
             time.sleep(2)
             stdin, stdout, stderr = self.__s.exec_command('iperf -c %s -i 1 -p %s' %(self.__master_IP, str(self.__port_iperf)))
 
-            print(stdout.read())
+            #print(stdout.read())
+            print(stderr.read())
             time.sleep(2)
             print(self.DECORATOR)
+            print('*******  CHUJ ****************')
             os.system('killall iperf')
             self.__s.close()
             # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
@@ -122,3 +124,7 @@ class Iperf(SshConnection):
               self.__master_IP,
               self.__s)
 
+from configuration import Configuration
+b = Configuration()
+x = Iperf('log0', b.conf_data, 0)
+x.tcp_upload()
