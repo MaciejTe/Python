@@ -40,8 +40,9 @@ class Iperf(SshConnection):
         return result
 
     def tcp_upload(self):
+        print('Start"')
         self.__s = SshConnection.connect_to_host(self)
-
+        print('[p sshconn')
         if type(self.__s) is int:
             result = self.__s
         else:
