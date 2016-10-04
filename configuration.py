@@ -1,5 +1,5 @@
 from configobj import ConfigObj
-
+from validate import Validator
 
 class Configuration(object):
     FILENAME = "conf.ini"
