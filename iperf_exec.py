@@ -3,10 +3,17 @@ import time
 
 from SshConnection import SshConnection
 
+.idea/*
+*.pyc
+tests/paramiko.log
+paramiko.log
+output.txt
+output_full.txt
+log0
+
 
 class Iperf(SshConnection):
-    DECORATOR = "****************************************************"
-    #DECORATOR = ('*' * 52)
+    DECORATOR = ('*' * 52)
 
     def __init__(self, filename, conf_data, host_index):
         SshConnection.__init__(self, conf_data, host_index)
@@ -55,7 +62,6 @@ class Iperf(SshConnection):
             print(stderr.read())
             time.sleep(2)
             print(self.DECORATOR)
-            print('*******  CHUJ ****************')
             os.system('killall iperf')
             self.__s.close()
             # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
@@ -68,9 +74,9 @@ class Iperf(SshConnection):
         self.__s = SshConnection.connect_to_host(self)
 
         if self.__s is -1:
-            result =  -1
+            result = -1
         elif self.__s is -2:
-            result =  -2
+            result = -2
         else:
             stdin, stdout, stderr = self.__s.exec_command(
                         'iperf -s -i 1 -u -p %s' % str(self.__port_iperf))
@@ -126,7 +132,9 @@ class Iperf(SshConnection):
               self.__s)
 
 
+
 # from configuration import Configuration
 # b = Configuration()
 # x = Iperf('log0', b.conf_data, 0)
+# #x.list_parameters()
 # x.tcp_upload()

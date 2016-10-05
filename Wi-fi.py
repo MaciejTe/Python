@@ -1,7 +1,7 @@
 import time
+import threading
 
 from iperf_threads import *
-from read_config import read_config
 from Error_handler import Error_handler
 from configuration import Configuration
 
@@ -9,8 +9,6 @@ from configuration import Configuration
 class Main(object):
 
     def __init__(self):
-        # read = read_config()
-        # read.start()
         configuration = Configuration()
         self.conf_data = configuration.conf_data
         self.__err_handler = Error_handler()
@@ -18,40 +16,48 @@ class Main(object):
     def run_thread(self, thr_desc, channel, wait_switch=True,
                    host_index=0, filename='log0'):
 
+        iperf_threads = IperfThreads()
+
         threads = {
-            'CPE_conf': CPE_configuration(
-                channel,
-                host_index,
-                'CPE_configuration',
-                self.conf_data),
-            'TCP_upload': threads_TCP_Upload(
-                filename,
-                host_index,
-                "CH%s_TCP_U_%s" % (
-                    str(channel),
-                    str(self.conf_data['Hostname'][host_index])),
-                        self.conf_data),
-            'TCP_download': threads_TCP_Download(
-                filename,
-                host_index,
-                "CH%s_TCP_D_%s" % (
-                    str(channel),
-                    str(self.conf_data['Hostname'][host_index])),
-                        self.conf_data),
-            'UDP_upload': threads_UDP_Upload(
-                filename,
-                host_index,
-                "CH%s_UDP_U_%s" % (
-                    str(channel),
-                    str(self.conf_data['Hostname'][host_index])),
-                        self.conf_data),
-            'UDP_download': threads_UDP_Download(
-                filename,
-                host_index,
-                "CH%s_UDP_D_%s" % (
-                    str(channel),
-                    str(self.conf_data['Hostname'][host_index])),
-                        self.conf_data)
+            'CPE_conf': threading.Thread(
+                        target=iperf_threads.cpe_configuration,
+                        args=(channel, host_index,
+                              'CPE_configuration',
+                              self.conf_data)),
+            'TCP_upload': threading.Thread(
+                            target=iperf_threads.run_thread,
+                            args=(filename, host_index,
+                                  "CH%s_TCP_U_%s" % (
+                                    str(channel),
+                                    str(self.conf_data['Hostname']
+                                        [host_index])),
+                                  self.conf_data,
+                                  'TCP_upload')),
+            'TCP_download': threading.Thread(
+                            target=iperf_threads.run_thread,
+                            args=(filename, host_index,
+                                  "CH%s_TCP_U_%s" % (
+                                    str(channel),
+                                    str(self.conf_data['Hostname']
+                                        [host_index])),
+                                  self.conf_data,
+                                  'TCP_download')),
+            'UDP_upload': threading.Thread(
+                            target=iperf_threads.run_thread,
+                            args=(filename, host_index,
+                                  "CH%s_TCP_U_%s" % (
+                                    str(channel),
+                                    str(self.conf_data['Hostname']
+                                        [host_index])),
+                                  self.conf_data, 'UDP_upload')),
+            'UDP_download': threading.Thread(
+                            target=iperf_threads.run_thread,
+                            args=(filename, host_index,
+                                  "CH%s_TCP_U_%s" % (
+                                    str(channel),
+                                    str(self.conf_data['Hostname']
+                                        [host_index])),
+                                  self.conf_data, 'UDP_download')),
         }
 
         try:
@@ -106,7 +112,7 @@ class Main(object):
 
 
         except Exception as e:
-            print(e,'asd')
+            print(e, 'asd')
 
             # Obsluga bledow!
             

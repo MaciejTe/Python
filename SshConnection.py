@@ -68,7 +68,7 @@ class SshConnection(object):
         """Set the ssh connection for CPE.
 
         Args:
-            channel (int): router channel.
+            channel (str): router channel.
 
         Returns:
             result: 0 (int) for success,
@@ -101,6 +101,7 @@ class SshConnection(object):
             self.ssh.send('\n' + 'exit\n')
             print(output)
             result = 0
+            connection.close()
 
         except AuthenticationException:
             print('Incorrect username or password for CPE')

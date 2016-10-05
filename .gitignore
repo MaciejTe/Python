@@ -1,5 +1,5 @@
 .idea/*
-**.pyc
+*.pyc
 tests/paramiko.log
 paramiko.log
 output.txt
