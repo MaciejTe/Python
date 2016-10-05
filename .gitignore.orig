@@ -1,0 +1,12 @@
+<<<<<<< HEAD
+$ cat .gitignore
+.idea/
+=======
+.idea/*
+*.pyc
+tests/paramiko.log
+paramiko.log
+output.txt
+output_full.txt
+log0
+>>>>>>> a5f85a2abf9fe4333d190d7932ac2c63889e4c94
