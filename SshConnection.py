@@ -18,12 +18,12 @@ class SshConnection(object):
 
         """
 
-        self.hostname = '192.168.10.9'
-        self.username = 'maciek'
-        self.password = 'eysuaaty'
-        #self.hostname = conf_data['Hostname'][host_index]
-        #self.username = conf_data['Username'][host_index]
-        #self.password = conf_data['Password'][host_index]
+        #self.hostname = '192.168.10.2'
+        #self.username = 'maciek'
+        #self.password = 'eysuaaty'
+        self.hostname = conf_data['Hostname'][host_index]
+        self.username = conf_data['Username'][host_index]
+        self.password = conf_data['Password'][host_index]
         self.CPE_hostname = conf_data['CPE_credentials'][0]
         self.CPE_username = conf_data['CPE_credentials'][1]
         self.CPE_password = conf_data['CPE_credentials'][2]
@@ -61,14 +61,13 @@ class SshConnection(object):
             print(e)
             result = 103
             self.s.close()
-
         return result
 
     def connect_to_cpe(self, channel):
         """Set the ssh connection for CPE.
 
         Args:
-            channel (int): router channel.
+            channel (str): router channel.
 
         Returns:
             result: 0 (int) for success,

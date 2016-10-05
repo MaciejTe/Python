@@ -44,14 +44,3 @@ class Configuration(object):
 
         return structure
 
-
-        #print(__conf_data)
-
-
-
-
-#ob = Configuration()
-#ob.test()
-
-#ob.read_config()
-#ob.validation()
