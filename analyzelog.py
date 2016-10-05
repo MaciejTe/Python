@@ -85,8 +85,10 @@ class AnalyzeLog(object):
 
     def __reg_exp_analyze(self, row):
 
-        patch_under_100 = r'\d+\W{1}\d+\s+\w+\x2F\D{3}' # ponizej 100Mbits/sec
-        patch_above_100 = r'\d+\s+\w+\x2F\D{3}' # powyzej 100 Mbits/sec
+        # ponizej 100Mbits/sec
+        patch_under_100 = r'\d+\W{1}\d+\s+\w+\x2F\D{3}'
+        # powyzej 100 Mbits/sec
+        patch_above_100 = r'\d+\s+\w+\x2F\D{3}'
         match_under_100 = re.search(patch_under_100, row)
         match_above_100 = re.search(patch_above_100, row)
 
@@ -98,7 +100,3 @@ class AnalyzeLog(object):
             result = 'Not Found!'
 
         return result
-
-# ob = analyze_log()
-# ob.get_all_data('log0')
-# ob.get_mean_value('log0','chuj')

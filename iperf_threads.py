@@ -3,7 +3,6 @@ from analyzelog import AnalyzeLog
 from SshConnection import SshConnection
 
 
-
 class IperfThreads:
     """Thread bodies implementation"""
 

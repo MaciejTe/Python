@@ -64,7 +64,6 @@ class Main(object):
             thread = threads[thr_desc]
             thread.start()
             time.sleep(2)
-            # Dodac obsluge bledow!!!
         except:
             pass
         finally:

@@ -3,14 +3,6 @@ import time
 
 from SshConnection import SshConnection
 
-.idea/*
-*.pyc
-tests/paramiko.log
-paramiko.log
-output.txt
-output_full.txt
-log0
-
 
 class Iperf(SshConnection):
     DECORATOR = ('*' * 52)
@@ -32,40 +24,40 @@ class Iperf(SshConnection):
         if type(self.__s) is int:
             result = self.__s
         else:
-            stdin, stdout, stderr = self.__s.exec_command('iperf -s -i 1 -p '
-                                                          '%s' %str(self.__port_iperf))
+            stdin, stdout, stderr = self.__s.exec_command(
+                                    'iperf -s -i 1 -p %s'
+                                    % str(self.__port_iperf))
             time.sleep(3)
-            os.system('iperf -c %s -i 1 -p %s |tee %s' %(self.__hostname, str(self.__port_iperf), self.__filename))
+            os.system('iperf -c %s -i 1 -p %s |tee %s' %
+                      (self.__hostname, str(self.__port_iperf),
+                       self.__filename))
 
             time.sleep(2)
             print(self.DECORATOR)
             stdin, stdout, stderr = self.__s.exec_command('killall iperf')
             self.__s.close()
-            # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
             result = 0
 
         return result
 
     def tcp_upload(self):
-        print('Start"')
         self.__s = SshConnection.connect_to_host(self)
-        print('[p sshconn')
         if type(self.__s) is int:
             result = self.__s
         else:
             os.system('iperf -s -i 1 -p %s | tee %s &' %
                       (str(self.__port_iperf), self.__filename))
             time.sleep(2)
-            stdin, stdout, stderr = self.__s.exec_command('iperf -c %s -i 1 -p %s' %(self.__master_IP, str(self.__port_iperf)))
+            stdin, stdout, stderr = self.__s.exec_command(
+                                    'iperf -c %s -i 1 -p %s' %
+                                    (self.__master_IP,
+                                     str(self.__port_iperf)))
 
-            #print(stdout.read())
             print(stderr.read())
             time.sleep(2)
             print(self.DECORATOR)
             os.system('killall iperf')
             self.__s.close()
-            # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
-            # os.system('ps ax|grep iperf')
             result = 0
 
         return result
@@ -91,7 +83,6 @@ class Iperf(SshConnection):
             print(self.DECORATOR)
             stdin, stdout, stderr = self.__s.exec_command('killall iperf')
             self.__s.close()
-            # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
             result = 0
 
         return result
@@ -117,7 +108,6 @@ class Iperf(SshConnection):
             print (self.DECORATOR)
             os.system('killall iperf')
             self.__s.close()
-            # stdin, stdout, stderr = self.s.exec_command('ps ax|grep iperf')
             result = 0
 
         return result
@@ -131,10 +121,3 @@ class Iperf(SshConnection):
               self.__master_IP,
               self.__s)
 
-
-
-# from configuration import Configuration
-# b = Configuration()
-# x = Iperf('log0', b.conf_data, 0)
-# #x.list_parameters()
-# x.tcp_upload()
