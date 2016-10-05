@@ -3,15 +3,6 @@ import time
 
 from SshConnection import SshConnection
 
-.idea/*
-*.pyc
-tests/paramiko.log
-paramiko.log
-output.txt
-output_full.txt
-log0
-
-
 class Iperf(SshConnection):
     DECORATOR = ('*' * 52)
 
