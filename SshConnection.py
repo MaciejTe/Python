@@ -18,9 +18,6 @@ class SshConnection(object):
 
         """
 
-        #self.hostname = '192.168.10.2'
-        #self.username = 'maciek'
-        #self.password = 'eysuaaty'
         self.hostname = conf_data['Hostname'][host_index]
         self.username = conf_data['Username'][host_index]
         self.password = conf_data['Password'][host_index]
@@ -61,6 +58,7 @@ class SshConnection(object):
             print(e)
             result = 103
             self.s.close()
+
         return result
 
     def connect_to_cpe(self, channel):
@@ -110,8 +108,6 @@ class SshConnection(object):
             print(e)
             result = 105
             connection.close()
-        # finally:
-        #     connection.close()
 
         return result
 

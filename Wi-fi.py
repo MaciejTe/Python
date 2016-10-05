@@ -5,6 +5,7 @@ from iperf_threads import *
 from Error_handler import Error_handler
 from configuration import Configuration
 
+
 class Main(object):
 
     def __init__(self):
@@ -63,7 +64,6 @@ class Main(object):
             thread = threads[thr_desc]
             thread.start()
             time.sleep(2)
-            # Dodac obsluge bledow!!!
         except:
             pass
         finally:
@@ -100,6 +100,7 @@ class Main(object):
             self.write_description('START')
 
             for channel in self.conf_data['Channels']:
+                #nie wyciagam tutaj wartosci tylko klucz?
                 self.run_thread('CPE_conf', channel)
                 self.run_thread('TCP_upload', channel)
                 self.run_thread('TCP_download', channel)
@@ -113,7 +114,7 @@ class Main(object):
             print(e, 'asd')
 
             # Obsluga bledow!
-            pass
+            
 
 
 ob = Main()
@@ -130,3 +131,6 @@ ob.one_host()
 # elif(sys.argv[1] == '-h' or sys.argv[1] == '--help'):
 #     print('Usage:\n -s --> single host performance test')
 #     print('-m --> multiple(3) hosts performance test')
+
+
+#asd

@@ -1,5 +1,5 @@
 from configobj import ConfigObj
-from validate import Validator
+
 
 class Configuration(object):
     FILENAME = "conf.ini"
@@ -20,14 +20,13 @@ class Configuration(object):
                     len(self.conf_data['Port']),
                     ]
 
-        if (sum(len_list) / len(len_list)) is not len_list[0]: #co jesli nie
-            #  bedzie username, host i paswd??
+        if (sum(len_list) / len(len_list)) is not len_list[0]:
             result = False
-        if(len(self.conf_data['CPE_credentials']) is not 3):
+        if len(self.conf_data['CPE_credentials']) is not 3:
             result = False
-        if(len(self.conf_data['Master_IP']) is not 1):
+        if len(self.conf_data['Master_IP']) is not 1:
             result = False
-        if(len(self.conf_data['Channels']) is 0):
+        if len(self.conf_data['Channels']) is 0:
             result = False
 
         return result
@@ -43,4 +42,5 @@ class Configuration(object):
             temp_list = []
 
         return structure
+
 

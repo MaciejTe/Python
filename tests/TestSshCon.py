@@ -7,7 +7,7 @@ import sys
 sys.path.insert(0, 'C:\Users\LukaszP\Documents\Repos\WiFi_perf')
 
 from SshConnection import SshConnection
-from SshConnection import paramiko as paramiko
+from SshConnection import paramiko
 
 from paramiko.ssh_exception import *
 
@@ -16,8 +16,8 @@ class TestSshCon(unittest.TestCase):
     """Tests SshConnection class from WiFi_perf project"""
 
     def setUp(self):
-        self.sshmock = mock.MagicMock(name='ssh',
-                                 spec=SshConnection)
+        self.sshmock = mock.MagicMock(name='ssh', spec=SshConnection)
+        self.paramikomock = mock.MagicMock(name='param', spec=paramiko)
 
         self.hostname = '192.168.10.9'
         self.username = 'lukaspolon'
@@ -30,21 +30,22 @@ class TestSshCon(unittest.TestCase):
         self.s = None
 
         self.conf_data = {
-            'hostname': [self.hostname],
-            'username': [self.username],
-            'port': ['50000'],
-            'password': [self.password],
-            'master_ip': ['192.168.3.3'],
+            'Hostname': [self.hostname],
+            'Username': [self.username],
+            'Port': ['50000'],
+            'Password': [self.password],
+            'Master_ip': ['192.168.3.3'],
             'CPE_credentials': [self.CPE_hostname,
                                 self.CPE_username,
                                 self.CPE_password],
-            'channels': ['1', '9', '13']
+            'Channels': ['1', '9', '13']
         }
         self.host_index = 0
         self.paramiko_file = 'paramiko.log'
 
     def tearDown(self):
         self.sshmock.reset_mock()
+        self.paramikomock.reset_mock()
 
     def test_init(self):
         """Tests __init__ method in SshConnection class"""
@@ -62,26 +63,8 @@ class TestSshCon(unittest.TestCase):
 
     def test_connect_to_host(self):
         """Tests connect_to_host method in SshConnection class"""
-        paramiko_ob = paramiko.SSHClient()
-        exp_res_one = type(paramiko_ob)
-        exp_res_two = 101
-        exp_res_three = 102
-        exp_res_four = 103
-
-        self.sshmock.PARAMIKO_FILE = self.paramiko_file
-        self.sshmock.hostname = self.hostname
-        self.sshmock.port_SSH = self.port_SSH
-        self.sshmock.username = self.username
-        self.sshmock.password = self.password
-        self.sshmock.s = paramiko_ob
-        self.sshmock.paramiko = paramiko
-        self.sshmock(self.conf_data, self.host_index)
-        self.sshmock.paramiko.SSHClient().return_value = 1
-        #self.sshmock.paramiko.SShCLient().connect().return_value = 1
-        #self.sshmock.s.connect(self.sshmock).return_value = None
-        #self.assertRaises(SshConnection)
-        SshConnection.connect_to_host(self.sshmock)
-
+        with SshConnection.connect_to_host(self.sshmock) as x:
+            pass
 
     def test_connect_to_cpe(self):
         """Tests connect_to_cpe method in SshConnection class"""
