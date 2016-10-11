@@ -1,8 +1,9 @@
 import time
 import threading
+import sys
 
 from iperf_threads import *
-from Error_handler import Error_handler
+from Error_handler import ErrorHandler
 from configuration import Configuration
 
 
@@ -11,7 +12,8 @@ class Main(object):
     def __init__(self):
         configuration = Configuration()
         self.conf_data = configuration.conf_data
-        self.__err_handler = Error_handler()
+        self.__err_handler = ErrorHandler()
+        self.rep_count = 0
 
     def run_thread(self, thr_desc, channel, wait_switch=True,
                    host_index=0, filename='log0'):
@@ -64,10 +66,11 @@ class Main(object):
             thread = threads[thr_desc]
             thread.start()
             time.sleep(2)
+            self.wait_for_thread(wait_switch)
         except:
             pass
         finally:
-            self.wait_for_thread(wait_switch)
+            pass
 
     def wait_for_thread(self, switch=True):
         if switch:
@@ -95,12 +98,21 @@ class Main(object):
             # Dokonczyc obsluge bledow!!
             pass
 
+    def error_check(self, actiontype):
+        if self.rep_count is 0:
+
+            if actiontype is 0:
+                print('!!!ACTION!!!: Repeat previous thread.')
+                self.rep_count += 1
+            elif actiontype is 1:
+                print('!!!ACTION!!!: Terminate program.')
+                sys.exit()
+
     def one_host(self):
         try:
             self.write_description('START')
 
             for channel in self.conf_data['Channels']:
-                #nie wyciagam tutaj wartosci tylko klucz?
                 self.run_thread('CPE_conf', channel)
                 self.run_thread('TCP_upload', channel)
                 self.run_thread('TCP_download', channel)
@@ -109,13 +121,10 @@ class Main(object):
 
             self.write_description('END')
 
-
         except Exception as e:
             print(e, 'asd')
 
             # Obsluga bledow!
-            
-
 
 ob = Main()
 ob.one_host()
