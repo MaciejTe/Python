@@ -70,6 +70,7 @@ class Main(object):
 
         try:
             thread = threads[thr_desc]
+            threads.remove('CPE_conf')
 
             thread.start()
             time.sleep(2)
@@ -132,7 +133,6 @@ class Main(object):
                 self.run_thread('CPE_conf', channel)
                 for method in self.iter_methods:
                     #self.run_thread(method, channel, wait_switch=False)
-                    print(method)
                 #self.run_thread('TCP_download', channel, wait_switch=False)
                 #self.run_thread('UDP_upload', channel, wait_switch=False)
                 #self.run_thread('UDP_download', channel)
