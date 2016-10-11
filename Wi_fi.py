@@ -13,6 +13,8 @@ class Main(object):
         self.conf_data = configuration.conf_data
         self.__err_handler = Error_handler()
 
+        self.iter_methods = []
+
     def run_thread(self, thr_desc, channel, wait_switch=True,
                    host_index=0, filename='log0'):
 
@@ -36,7 +38,7 @@ class Main(object):
             'TCP_download': threading.Thread(
                             target=iperf_threads.run_thread,
                             args=(filename, host_index,
-                                  "CH%s_TCP_U_%s" % (
+                                  "CH%s_TCP_D_%s" % (
                                     str(channel),
                                     str(self.conf_data['Hostname']
                                         [host_index])),
@@ -45,23 +47,30 @@ class Main(object):
             'UDP_upload': threading.Thread(
                             target=iperf_threads.run_thread,
                             args=(filename, host_index,
-                                  "CH%s_TCP_U_%s" % (
+                                  "CH%s_UDP_U_%s" % (
                                     str(channel),
                                     str(self.conf_data['Hostname']
                                         [host_index])),
-                                  self.conf_data, 'UDP_upload')),
+                                  self.conf_data,
+                                  'UDP_upload')),
             'UDP_download': threading.Thread(
                             target=iperf_threads.run_thread,
                             args=(filename, host_index,
-                                  "CH%s_TCP_U_%s" % (
+                                  "CH%s_UDP_D_%s" % (
                                     str(channel),
                                     str(self.conf_data['Hostname']
                                         [host_index])),
-                                  self.conf_data, 'UDP_download')),
+                                  self.conf_data,
+                                  'UDP_download')),
         }
+
+        for key in threads:
+            self.iter_methods.append(key)
+            print(self.iter_methods)
 
         try:
             thread = threads[thr_desc]
+
             thread.start()
             time.sleep(2)
         except:
@@ -100,7 +109,6 @@ class Main(object):
             self.write_description('START')
 
             for channel in self.conf_data['Channels']:
-                #nie wyciagam tutaj wartosci tylko klucz?
                 self.run_thread('CPE_conf', channel)
                 self.run_thread('TCP_upload', channel)
                 self.run_thread('TCP_download', channel)
@@ -114,11 +122,37 @@ class Main(object):
             print(e, 'asd')
 
             # Obsluga bledow!
-            
+
+    def multiple_hosts(self):
+        try:
+            self.write_description('START')
+
+
+            for channel in self.conf_data['Channels']:
+                self.run_thread('CPE_conf', channel)
+                for method in self.iter_methods:
+                    #self.run_thread(method, channel, wait_switch=False)
+                    print(method)
+                #self.run_thread('TCP_download', channel, wait_switch=False)
+                #self.run_thread('UDP_upload', channel, wait_switch=False)
+                #self.run_thread('UDP_download', channel)
+
+            self.write_description('END')
+        except Exception as e:
+            print(e)
+            #Obsluga bledow!
+#
+# for channels
+#     for methods
+#         for hosts
+
+
+
 
 
 ob = Main()
-ob.one_host()
+#ob.one_host()
+ob.multiple_hosts()
 
 #
 # if(args_len == 1):

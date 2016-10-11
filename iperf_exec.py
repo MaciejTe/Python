@@ -5,6 +5,7 @@ from SshConnection import SshConnection
 
 class Iperf(SshConnection):
     DECORATOR = ('*' * 52)
+    UDP_BANDWIDTH = '100M'
 
     def __init__(self, filename, conf_data, host_index):
         SshConnection.__init__(self, conf_data, host_index)
@@ -73,8 +74,9 @@ class Iperf(SshConnection):
                         'iperf -s -i 1 -u -p %s' % str(self.__port_iperf))
 
             time.sleep(3)
-            os.system('iperf -c %s -i 1 -u -b 200M -p %s |tee %s' %
+            os.system('iperf -c %s -i 1 -u -b %s -p %s |tee %s' %
                      (self.__hostname,
+                      self.UDP_BANDWIDTH,
                       str(self.__port_iperf),
                       self.__filename))
 
@@ -99,8 +101,10 @@ class Iperf(SshConnection):
 
             time.sleep(2)
             stdin, stdout, stderr = self.__s.exec_command(
-                'iperf -c %s -i 1 -u -b 200M -p %s' %
-                (self.__master_IP, str(self.__port_iperf)))
+                'iperf -c %s -i 1 -u -b %s -p %s' %
+                (self.__master_IP,
+                 self.UDP_BANDWIDTH,
+                 str(self.__port_iperf)))
 
             print(stdout.read())
             time.sleep(2)
