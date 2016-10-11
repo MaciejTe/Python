@@ -11,7 +11,6 @@ class Configuration(object):
         if not(self.validation()):
             self.conf_data = None
 
-
     def validation(self):
         result = True
         len_list = [len(self.conf_data['Username']),

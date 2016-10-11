@@ -3,6 +3,7 @@ import time
 
 from SshConnection import SshConnection
 
+
 class Iperf(SshConnection):
     DECORATOR = ('*' * 52)
     UDP_BANDWIDTH = '100M'
