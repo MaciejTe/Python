@@ -2,10 +2,13 @@ import re
 
 
 class AnalyzeLog(object):
+    """Class for analyze iperf log"""
+
     FILE_FULL = 'output_full.txt'
     FILE_OUTPUT = 'output.txt'
 
     def get_all_data(self, input_filename, thread_id):
+
         try:
             file_output_full = open(self.FILE_FULL, 'a')
             file_input = open(input_filename, 'r')
@@ -36,7 +39,7 @@ class AnalyzeLog(object):
             boolean = False
 
             for row in file_input:
-                if row.find('Server Report',0,100) != -1:
+                if row.find('Server Report', 0, 100) != -1:
                     boolean = True
                     continue
                 if boolean:
