@@ -66,17 +66,19 @@ class Main(object):
                                   'UDP_download')),
         }
 
-        for key in threads:
-            self.iter_methods.append(key)
-            print(self.iter_methods)
+        if len(self.iter_methods) is 0:
+            for key in threads:
+                self.iter_methods.append(key)
+            self.iter_methods.remove('CPE_conf')
+            self.iter_methods.sort()
 
         try:
-            thread = threads[thr_desc]
-            threads.remove('CPE_conf')
-
-            thread.start()
-            time.sleep(2)
-            self.wait_for_thread(wait_switch)
+            print('wywolanie')
+            # thread = threads[thr_desc]
+            #
+            # thread.start()
+            # time.sleep(2)
+            # self.wait_for_thread(wait_switch)
         except:
             pass
         finally:
@@ -140,41 +142,23 @@ class Main(object):
         try:
             self.write_description('START')
 
-
             for channel in self.conf_data['Channels']:
                 self.run_thread('CPE_conf', channel)
                 for method in self.iter_methods:
-                    #self.run_thread(method, channel, wait_switch=False)
-                #self.run_thread('TCP_download', channel, wait_switch=False)
-                #self.run_thread('UDP_upload', channel, wait_switch=False)
-                #self.run_thread('UDP_download', channel)
+                    for i in range(3):
+                        self.run_thread(method,
+                                        channel,
+                                        wait_switch=False,
+                                        host_index=i)
+                    else:
+                        self.wait_for_thread()
 
             self.write_description('END')
         except Exception as e:
             print(e)
             #Obsluga bledow!
-#
-# for channels
-#     for methods
-#         for hosts
-
 
 
 ob = Main()
 #ob.one_host()
 ob.multiple_hosts()
-
-#
-# if(args_len == 1):
-#     print('Application takes exactly one argument: -s or -m')
-#     print('-h or --help --> Help')
-# elif(sys.argv[1] == '-s'):
-#     ob.single_host()
-# elif(sys.argv[1] == '-m'):
-#     ob.multiple_hosts()
-# elif(sys.argv[1] == '-h' or sys.argv[1] == '--help'):
-#     print('Usage:\n -s --> single host performance test')
-#     print('-m --> multiple(3) hosts performance test')
-
-
-#asd
