@@ -25,20 +25,20 @@ class ErrorHandler:
             print('There is no such error code!')
             self.ERR_ACTION = 1
 
-
-def smart_divide(func):
-    def inner(*args, **kwargs):
-        print(args)
-        print("I am going to divide",args[0],"and",args[1]," possible",kwargs['c'])
-        if args[1] == 0:
-            print("Whoops! cannot divide")
-            return
-
-        return func(*args, **kwargs)
-    return inner
-
-@smart_divide
-def divide(a,b, c=100):
-    return a/b
-
-divide(1,2)
+#
+# def smart_divide(func):
+#     def inner(*args, **kwargs):
+#         print(args)
+#         print("I am going to divide",args[0],"and",args[1]," possible",kwargs['c'])
+#         if args[1] == 0:
+#             print("Whoops! cannot divide")
+#             return
+#
+#         return func(*args, **kwargs)
+#     return inner
+#
+# @smart_divide
+# def divide(a,b, c=100):
+#     return a/b
+#
+# divide(1,2)

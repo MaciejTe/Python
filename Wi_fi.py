@@ -10,6 +10,8 @@ from configuration import Configuration
 class Main(object):
 
     def __init__(self):
+        # TODO
+        # self!
         configuration = Configuration()
         self.conf_data = configuration.conf_data
         self.err_handler = EH()
@@ -17,7 +19,7 @@ class Main(object):
 
         self.iter_methods = []
 
-    @error_check
+    #@error_check
     def run_thread(self, thr_desc, channel, wait_switch=True,
                    host_index=0, filename='log0'):
 
@@ -74,12 +76,12 @@ class Main(object):
             self.iter_methods.sort()
 
         try:
-            print('wywolanie')
-            # thread = threads[thr_desc]
-            #
-            # thread.start()
-            # time.sleep(2)
-            # self.wait_for_thread(wait_switch)
+            pass
+            thread = threads[thr_desc]
+
+            thread.start()
+            time.sleep(2)
+            self.wait_for_thread(wait_switch)
         except:
             pass
         finally:
@@ -175,6 +177,6 @@ class Main(object):
             #Obsluga bledow!
 
 
-ob = Main()
-#ob.one_host()
-ob.multiple_hosts()
+# ob = Main()
+# ob.one_host()
+#ob.multiple_hosts()
