@@ -24,7 +24,7 @@ class ErrorHandler:
         else:
             print('There is no such error code!')
             self.ERR_ACTION = 1
-
+'''
 
 def smart_divide(func):
     def inner(*args, **kwargs):
@@ -42,3 +42,54 @@ def divide(a,b, c=100):
     return a/b
 
 divide(1,2)
+
+
+
+def decor(func):
+    def inner(self, *args, **kwargs):
+        print('Start decor')
+        if args[0] < 100:
+            func(self, args[0])
+        else:
+            func(self, self.somevar)
+            print('else')
+        print('stop decor')
+    return inner
+class A(object):
+    def __init__(self):
+        self.somevar = 999999
+
+    @decor
+    def func_to_decor(self, a):
+        print(a)
+
+ob = A()
+ob.func_to_decor(10000)
+print('\n')
+ob.func_to_decor(50)
+
+
+def check(func):
+    def checked(self):
+        if not self.start:
+            return
+        func(self)
+    return checked
+
+class myclass:
+    def __init__(self):
+        self.start = True
+
+    @check
+    def doA(self):
+        print('A')
+
+    @check
+    def doB(self):
+        print('B')
+
+
+a = myclass()
+
+a.doA()
+'''

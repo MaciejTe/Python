@@ -7,6 +7,36 @@ from Error_handler import ErrorHandler as EH
 from configuration import Configuration
 
 
+def error_check(run_thread):
+    def inner(self, *args, **kwargs):
+        options = {'wait_switch': True,
+                   'host_index': 0,
+                   'filename': 'log0'}
+        options.update(kwargs)
+        run_thread(args[0], args[1],
+                   wait_switch=options['wait_switch'],
+                   host_index=options['host_index'],
+                   filename=options['filename'])
+
+        if self.rep_count is 0:
+
+            if EH.ERR_ACTION is 0:
+                print('!!!Error!!!:')
+                print(EH.ERR_CODE)
+                print('!!!ACTION!!!: Repeat previous thread.')
+                self.rep_count += 1
+                run_thread(args[0], args[1],
+                           wait_switch=options['wait_switch'],
+                           host_index=options['host_index'],
+                           filename=options['filename'])
+            elif EH.ERR_ACTION is 1:
+                print('!!!Error!!!:')
+                print(EH.ERR_CODE)
+                print('!!!ACTION!!!: Terminate program.')
+                sys.exit()
+
+    return inner
+
 class Main(object):
 
     def __init__(self):
@@ -16,6 +46,7 @@ class Main(object):
         self.rep_count = 0
 
         self.iter_methods = []
+
 
     @error_check
     def run_thread(self, thr_desc, channel, wait_switch=True,
@@ -72,6 +103,7 @@ class Main(object):
             print(self.iter_methods)
 
         try:
+
             thread = threads[thr_desc]
 
             thread.start()
@@ -108,30 +140,7 @@ class Main(object):
             # Dokonczyc obsluge bledow!!
             pass
 
-    def error_check(self, run_thread):
-        def inner(*args, **kwargs):
-            options = {'wait_switch': True,
-                       'host_index': 0,
-                       'filename': 'log0'}
-            options.update(kwargs)
-            run_thread(args[0], args[1], options['wait_switch'],
-                       options['host_index'], options['filename'])
 
-            if self.rep_count is 0:
-
-                if EH.ERR_ACTION is 0:
-                    print('!!!Error!!!:')
-                    print(EH.ERR_CODE)
-                    print('!!!ACTION!!!: Repeat previous thread.')
-                    self.rep_count += 1
-                    run_thread(args[0], args[1], options['wait_switch'],
-                               options['host_index'], options['filename'])
-                elif EH.ERR_ACTION is 1:
-                    print('!!!Error!!!:')
-                    print(EH.ERR_CODE)
-                    print('!!!ACTION!!!: Terminate program.')
-                    sys.exit()
-        return inner
 
     def one_host(self):
         try:
