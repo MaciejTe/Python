@@ -89,7 +89,7 @@ class ErrorHandler:
         }
 
         self.err_search(err_code)
-
+'''
 
     def err_search(self, err_code):
 
@@ -104,3 +104,53 @@ class ErrorHandler:
 
         if self.kill_thread:
             sys.exit()
+
+
+def decor(func):
+    def inner(self, *args, **kwargs):
+        print('Start decor')
+        if args[0] < 100:
+            func(self, args[0])
+        else:
+            func(self, self.somevar)
+            print('else')
+        print('stop decor')
+    return inner
+class A(object):
+    def __init__(self):
+        self.somevar = 999999
+
+    @decor
+    def func_to_decor(self, a):
+        print(a)
+
+ob = A()
+ob.func_to_decor(10000)
+print('\n')
+ob.func_to_decor(50)
+
+
+def check(func):
+    def checked(self):
+        if not self.start:
+            return
+        func(self)
+    return checked
+
+class myclass:
+    def __init__(self):
+        self.start = True
+
+    @check
+    def doA(self):
+        print('A')
+
+    @check
+    def doB(self):
+        print('B')
+
+
+a = myclass()
+
+a.doA()
+'''

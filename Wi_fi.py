@@ -1,6 +1,7 @@
 import time
 import threading
 import sys
+import datetime
 
 from iperf_threads import *
 from Error_handler import ErrorHandler as EH
@@ -134,6 +135,8 @@ class Main(object):
 
     def write_description(self, description, hosts_amount='ONE_HOST'):
         try:
+            curr_datetime = datetime.datetime.today()
+            curr_datetime = curr_datetime.strftime('%A, %d. %B %Y %I:%M%p')
             blank_lines = ('\n', '\n\n\n')
             select_blanklns = 0
             if hosts_amount != 'ONE_HOST':
@@ -141,11 +144,13 @@ class Main(object):
 
             file_output = open('output.txt', 'a')
             file_output_full = open('output_full.txt', 'a')
-            file_output_full.write('********** %s - %s *******************%s'
+            file_output_full.write('*** %s - %s *** %s ***%s'
                                    % (description, hosts_amount,
+                                      curr_datetime,
                                       blank_lines[select_blanklns]))
-            file_output.write('*** %s - %s *******************%s'
+            file_output.write('*** %s - %s *** %s ***%s'
                               % (description, hosts_amount,
+                                 curr_datetime,
                                  blank_lines[select_blanklns]))
             file_output.close()
             file_output_full.close()
