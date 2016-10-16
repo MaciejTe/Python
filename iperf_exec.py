@@ -5,13 +5,13 @@ from SshConnection import SshConnection
 
 
 class Iperf(SshConnection):
-    DECORATOR = ('*' * 52)
+    DEC = ('*' * 52)
     UDP_BANDWIDTH = '100M'
 
     def __init__(self, filename, conf_data, host_index):
         SshConnection.__init__(self, conf_data, host_index)
         self.__port_iperf = conf_data['Port'][host_index]
-        self.__master_IP = conf_data['Master_IP'][host_index]
+        self.__master_IP = conf_data['Master_IP'][0]
         self.__hostname = conf_data['Hostname'][host_index]
         self.__username = conf_data['Username'][host_index]
         self.__password = conf_data['Password'][host_index]
@@ -22,7 +22,7 @@ class Iperf(SshConnection):
     def tcp_download(self):
         self.__s = SshConnection.connect_to_host(self)
 
-        if type(self.__s) is int:
+        if self.__s is None:
             result = self.__s
         else:
             stdin, stdout, stderr = self.__s.exec_command(
@@ -34,7 +34,7 @@ class Iperf(SshConnection):
                        self.__filename))
 
             time.sleep(2)
-            print(self.DECORATOR)
+            print(self.DEC)
             stdin, stdout, stderr = self.__s.exec_command('killall iperf')
             self.__s.close()
             result = 0
@@ -43,7 +43,8 @@ class Iperf(SshConnection):
 
     def tcp_upload(self):
         self.__s = SshConnection.connect_to_host(self)
-        if type(self.__s) is int:
+
+        if self.__s is None:
             result = self.__s
         else:
             os.system('iperf -s -i 1 -p %s | tee %s &' %
@@ -56,7 +57,7 @@ class Iperf(SshConnection):
 
             print(stderr.read())
             time.sleep(2)
-            print(self.DECORATOR)
+            print(self.DEC)
             os.system('killall iperf')
             self.__s.close()
             result = 0
@@ -66,10 +67,8 @@ class Iperf(SshConnection):
     def udp_download(self):
         self.__s = SshConnection.connect_to_host(self)
 
-        if self.__s is -1:
-            result = -1
-        elif self.__s is -2:
-            result = -2
+        if self.__s is None:
+            result = self.__s
         else:
             stdin, stdout, stderr = self.__s.exec_command(
                         'iperf -s -i 1 -u -p %s' % str(self.__port_iperf))
@@ -82,7 +81,7 @@ class Iperf(SshConnection):
                       self.__filename))
 
             time.sleep(2)
-            print(self.DECORATOR)
+            print(self.DEC)
             stdin, stdout, stderr = self.__s.exec_command('killall iperf')
             self.__s.close()
             result = 0
@@ -92,10 +91,8 @@ class Iperf(SshConnection):
     def udp_upload(self):
         self.__s = SshConnection.connect_to_host(self)
 
-        if self.__s is -1:
-            result = -1
-        elif self.__s is -2:
-            result = -2
+        if self.__s is None:
+            result = self.__s
         else:
             os.system('iperf -s -i 1 -u -p %s | tee %s &' %
                       (str(self.__port_iperf), self.__filename))
@@ -109,7 +106,7 @@ class Iperf(SshConnection):
 
             print(stdout.read())
             time.sleep(2)
-            print (self.DECORATOR)
+            print (self.DEC)
             os.system('killall iperf')
             self.__s.close()
             result = 0
@@ -124,4 +121,4 @@ class Iperf(SshConnection):
               self.__password,
               self.__master_IP,
               self.__s)
-
+### komentarz

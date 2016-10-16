@@ -1,5 +1,5 @@
 import re
-
+from Error_handler import ErrorHandler as EH
 
 class AnalyzeLog(object):
     """Class for analyze iperf log"""
@@ -21,12 +21,10 @@ class AnalyzeLog(object):
             return True
 
         except IOError:
-            print('!!!!WARNING!!!! Something went wrong with the input '
-                  'or output file')
+            EH(3011)
             return False
         except Exception as e:
-            print('!!!!WARNING!!!! Something went wrong.\n'
-                  '::::Exception log:\n')
+            EH(3012)
             print(e)
             return False
 
@@ -64,7 +62,7 @@ class AnalyzeLog(object):
                             break
                         else:
                             raise ValueError('!!!!WARNING!!!! Value not found')
-                    
+
             if result is None:
                 raise ValueError('!!!!WARNING!!!! Row not found')
 
@@ -74,15 +72,13 @@ class AnalyzeLog(object):
             return True
 
         except IOError:
-            print('!!!!WARNING!!!! Something went wrong with the'
-                  ' input or output file')
+            EH(3021)
             return False
         except ValueError as ve:
-            print(ve)
+            EH(3022)
             return False
         except Exception as e:
-            print('!!!!WARNING!!!! Something went wrong.'
-                  '\n::::Exception log:\n')
+            EH(3023)
             print(e)
             return False
 

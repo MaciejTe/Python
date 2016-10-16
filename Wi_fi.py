@@ -13,38 +13,45 @@ def error_check(run_thread):
                    'host_index': 0,
                    'filename': 'log0'}
         options.update(kwargs)
-        run_thread(args[0], args[1],
-                   wait_switch=options['wait_switch'],
-                   host_index=options['host_index'],
-                   filename=options['filename'])
+        run_thread(self, args[0], args[1], wait_switch=options['wait_switch'],
+                        host_index=options['host_index'],
+                        filename=options['filename'])
+        print(EH.ERR_ACTION)
+        if EH.ERR_ACTION is 1:
+            time.sleep(10)
+            print('!!!Error!!!:')
+            print(EH.ERR_CODE)
+            print('!!!ACTION!!!: Repeat previous thread.')
 
-        if self.rep_count is 0:
-
-            if EH.ERR_ACTION is 0:
-                print('!!!Error!!!:')
-                print(EH.ERR_CODE)
-                print('!!!ACTION!!!: Repeat previous thread.')
-                self.rep_count += 1
-                run_thread(args[0], args[1],
-                           wait_switch=options['wait_switch'],
-                           host_index=options['host_index'],
-                           filename=options['filename'])
-            elif EH.ERR_ACTION is 1:
+            run_thread(self, args[0], args[1],
+                            options['wait_switch'],
+                            options['host_index'],
+                            options['filename'])
+            if EH.ERR_ACTION is not None:
                 print('!!!Error!!!:')
                 print(EH.ERR_CODE)
                 print('!!!ACTION!!!: Terminate program.')
                 sys.exit()
 
+        elif EH.ERR_ACTION is 2:
+            print('!!!Error!!!:')
+            print(EH.ERR_CODE)
+            print('!!!ACTION!!!: Terminate program.')
+            sys.exit()
+
+        EH.ERR_ACTION = None
+        EH.ERR_CODE = None
+
     return inner
 
 class Main(object):
 
+
     def __init__(self):
+        # TODO
+        # self!
         configuration = Configuration()
         self.conf_data = configuration.conf_data
-        self.err_handler = EH()
-        self.rep_count = 0
-
         self.iter_methods = []
 
 
@@ -98,26 +105,32 @@ class Main(object):
                                   'UDP_download')),
         }
 
-        for key in threads:
-            self.iter_methods.append(key)
-            print(self.iter_methods)
-
+        if len(self.iter_methods) is 0:
+            for key in threads:
+                self.iter_methods.append(key)
+            self.iter_methods.remove('CPE_conf')
+            self.iter_methods.sort()
         try:
-
+            #
             thread = threads[thr_desc]
 
             thread.start()
             time.sleep(2)
-            self.wait_for_thread(wait_switch)
-        except:
-            pass
+        except RuntimeError:
+            EH(2011)
+        except Exception as e:
+            EH(2012)
+            print(e)
         finally:
-            pass
+            self.wait_for_thread(wait_switch)
 
     def wait_for_thread(self, switch=True):
-        if switch:
-            while len(threading.enumerate()) is not 1:
-                pass
+        try:
+            if switch:
+                while len(threading.enumerate()) is not 1:
+                    pass
+        except RuntimeError:
+            EH(2021, kill_thread=False)
 
     def write_description(self, description, hosts_amount='ONE_HOST'):
         try:
@@ -136,9 +149,11 @@ class Main(object):
                                  blank_lines[select_blanklns]))
             file_output.close()
             file_output_full.close()
-        except:
-            # Dokonczyc obsluge bledow!!
-            pass
+        except IOError:
+            EH(2031, kill_thread=False)
+        except Exception as e:
+            EH(2032)
+            print(e)
 
 
 
@@ -147,7 +162,8 @@ class Main(object):
             self.write_description('START')
 
             for channel in self.conf_data['Channels']:
-                self.run_thread('CPE_conf', channel)
+                #self.run_thread('CPE_conf', channel)
+
                 self.run_thread('TCP_upload', channel)
                 self.run_thread('TCP_download', channel)
                 self.run_thread('UDP_upload', channel)
@@ -155,51 +171,35 @@ class Main(object):
 
             self.write_description('END')
 
+        except RuntimeError:
+            EH(2041)
         except Exception as e:
-            print(e, 'asd')
-
-            # Obsluga bledow!
+            EH(2042)
+            print(e)
 
     def multiple_hosts(self):
         try:
             self.write_description('START')
 
-
             for channel in self.conf_data['Channels']:
                 self.run_thread('CPE_conf', channel)
                 for method in self.iter_methods:
-                    #self.run_thread(method, channel, wait_switch=False)
-                    print(method)
-                #self.run_thread('TCP_download', channel, wait_switch=False)
-                #self.run_thread('UDP_upload', channel, wait_switch=False)
-                #self.run_thread('UDP_download', channel)
+                    for i in range(3):
+                        self.run_thread(method,
+                                        channel,
+                                        wait_switch=False,
+                                        host_index=i)
+                    else:
+                        self.wait_for_thread()
 
             self.write_description('END')
+        except RuntimeError:
+            EH(2051)
         except Exception as e:
+            EH(2052)
             print(e)
-            #Obsluga bledow!
-#
-# for channels
-#     for methods
-#         for hosts
 
 
-
-ob = Main()
+#ob = Main()
 #ob.one_host()
-ob.multiple_hosts()
-
-#
-# if(args_len == 1):
-#     print('Application takes exactly one argument: -s or -m')
-#     print('-h or --help --> Help')
-# elif(sys.argv[1] == '-s'):
-#     ob.single_host()
-# elif(sys.argv[1] == '-m'):
-#     ob.multiple_hosts()
-# elif(sys.argv[1] == '-h' or sys.argv[1] == '--help'):
-#     print('Usage:\n -s --> single host performance test')
-#     print('-m --> multiple(3) hosts performance test')
-
-
-#asd
+#ob.multiple_hosts()

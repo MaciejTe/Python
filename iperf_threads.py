@@ -46,8 +46,6 @@ class IperfThreads:
             iperf.udp_upload()
         elif iperf_choice == 'UDP_download':
             iperf.udp_download()
-        else:
-            print('ERROR')
 
         ob = AnalyzeLog()
         ob.get_mean_value(filename, thread_id)
