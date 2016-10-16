@@ -35,8 +35,8 @@ class Iperf(SshConnection):
             os.system('iperf -c %s -i 1 -p %s -t %s|tee %s' %
                       (self.__hostname,
                        str(self.__port_iperf),
-                       self.__filename,
-                       Iperf.DURATION_TIME))
+                       Iperf.DURATION_TIME,
+                       self.__filename))
 
             time.sleep(2)
             print(self.DEC)
@@ -84,8 +84,8 @@ class Iperf(SshConnection):
                      (self.__hostname,
                       Iperf.UDP_BANDWIDTH,
                       str(self.__port_iperf),
-                      self.__filename,
-                      Iperf.DURATION_TIME))
+                      Iperf.DURATION_TIME,
+                      self.__filename))
 
             time.sleep(2)
             print(self.DEC)

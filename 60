@@ -1,9 +1,0 @@
-------------------------------------------------------------
-Client connecting to 192.168.10.2, UDP port 50000
-Sending 1470 byte datagrams
-UDP buffer size:  208 KByte (default)
-------------------------------------------------------------
-[  7] local 192.168.10.3 port 45468 connected with 192.168.10.2 port 50000
-[ ID] Interval       Transfer     Bandwidth
-[  7]  0.0- 0.0 sec  1.44 KBytes  26.9 Mbits/sec
-[  7] Sent 1 datagrams

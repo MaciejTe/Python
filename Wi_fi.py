@@ -133,10 +133,16 @@ class Main(object):
         except RuntimeError:
             EH(2021, kill_thread=False)
 
+    def set_date(self):
+        curr_datetime = datetime.datetime.today()
+        curr_datetime = curr_datetime.strftime('%A, %d. %B %Y %I:%M%p')
+        return curr_datetime
+
     def write_description(self, description, hosts_amount='ONE_HOST'):
+
+
         try:
-            curr_datetime = datetime.datetime.today()
-            curr_datetime = curr_datetime.strftime('%A, %d. %B %Y %I:%M%p')
+
             blank_lines = ('\n', '\n\n\n')
             select_blanklns = 0
             if hosts_amount != 'ONE_HOST':
@@ -146,11 +152,11 @@ class Main(object):
             file_output_full = open('output_full.txt', 'a')
             file_output_full.write('*** %s - %s *** %s ***%s'
                                    % (description, hosts_amount,
-                                      curr_datetime,
+                                      self.set_date(),
                                       blank_lines[select_blanklns]))
             file_output.write('*** %s - %s *** %s ***%s'
                               % (description, hosts_amount,
-                                 curr_datetime,
+                                 self.set_date(),
                                  blank_lines[select_blanklns]))
             file_output.close()
             file_output_full.close()
