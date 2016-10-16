@@ -89,7 +89,7 @@ class ErrorHandler:
         }
 
         self.err_search(err_code)
-'''
+
 
     def err_search(self, err_code):
 
@@ -104,7 +104,7 @@ class ErrorHandler:
 
         if self.kill_thread:
             sys.exit()
-
+'''
 
 def decor(func):
     def inner(self, *args, **kwargs):
