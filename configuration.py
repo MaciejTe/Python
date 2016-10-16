@@ -1,5 +1,5 @@
 from configobj import ConfigObj
-from validate import Validator
+from Error_handler import ErrorHandler as EH
 
 class Configuration(object):
     FILENAME = "conf.ini"
@@ -11,36 +11,47 @@ class Configuration(object):
         if not(self.validation()):
             self.conf_data = None
 
-
     def validation(self):
+        # sprawdzic czy plik istnieje i nie jest pusty | modul OS - isfile
         result = True
         len_list = [len(self.conf_data['Username']),
                     len(self.conf_data['Hostname']),
                     len(self.conf_data['Password']),
                     len(self.conf_data['Port']),
                     ]
-
-        if (sum(len_list) / len(len_list)) is not len_list[0]: #co jesli nie
-            #  bedzie username, host i paswd??
-            result = False
-        if(len(self.conf_data['CPE_credentials']) is not 3):
-            result = False
-        if(len(self.conf_data['Master_IP']) is not 1):
-            result = False
-        if(len(self.conf_data['Channels']) is 0):
-            result = False
+        try:
+            if (sum(len_list) / len(len_list)) is not len_list[0]:
+                result = False
+                raise ValueError
+            if len(self.conf_data['CPE_credentials']) is not 3:
+                result = False
+                raise ValueError
+            if len(self.conf_data['Master_IP']) is not 1:
+                result = False
+                raise ValueError
+            if len(self.conf_data['Channels']) is 0:
+                result = False
+                raise ValueError
+        except ValueError:
+            EH(4011)
+        except Exception as e:
+            EH(4012)
+            print(e)
 
         return result
 
     def change_data_struct(self):
         structure = {}
         temp_list = []
+        try:
+            for key in self.raw_conf_data:
+                for inner_key in self.raw_conf_data[key]:
+                    temp_list.append(self.raw_conf_data[key][inner_key])
+                structure.update({key: temp_list})
+                temp_list = []
+            return structure
+        except LookupError:
+            EH(4021, kill_thread=False)
 
-        for key in self.raw_conf_data:
-            for inner_key in self.raw_conf_data[key]:
-                temp_list.append(self.raw_conf_data[key][inner_key])
-            structure.update({key: temp_list})
-            temp_list = []
 
-        return structure
 

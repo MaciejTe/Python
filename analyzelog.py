@@ -1,11 +1,14 @@
 import re
-
+from Error_handler import ErrorHandler as EH
 
 class AnalyzeLog(object):
+    """Class for analyze iperf log"""
+
     FILE_FULL = 'output_full.txt'
     FILE_OUTPUT = 'output.txt'
 
     def get_all_data(self, input_filename, thread_id):
+
         try:
             file_output_full = open(self.FILE_FULL, 'a')
             file_input = open(input_filename, 'r')
@@ -18,12 +21,10 @@ class AnalyzeLog(object):
             return True
 
         except IOError:
-            print('!!!!WARNING!!!! Something went wrong with the input '
-                  'or output file')
+            EH(3011)
             return False
         except Exception as e:
-            print('!!!!WARNING!!!! Something went wrong.\n'
-                  '::::Exception log:\n')
+            EH(3012)
             print(e)
             return False
 
@@ -36,7 +37,7 @@ class AnalyzeLog(object):
             boolean = False
 
             for row in file_input:
-                if row.find('Server Report',0,100) != -1:
+                if row.find('Server Report', 0, 100) != -1:
                     boolean = True
                     continue
                 if boolean:
@@ -61,7 +62,7 @@ class AnalyzeLog(object):
                             break
                         else:
                             raise ValueError('!!!!WARNING!!!! Value not found')
-                    
+
             if result is None:
                 raise ValueError('!!!!WARNING!!!! Row not found')
 
@@ -71,22 +72,22 @@ class AnalyzeLog(object):
             return True
 
         except IOError:
-            print('!!!!WARNING!!!! Something went wrong with the'
-                  ' input or output file')
+            EH(3021)
             return False
         except ValueError as ve:
-            print(ve)
+            EH(3022)
             return False
         except Exception as e:
-            print('!!!!WARNING!!!! Something went wrong.'
-                  '\n::::Exception log:\n')
+            EH(3023)
             print(e)
             return False
 
     def __reg_exp_analyze(self, row):
 
-        patch_under_100 = r'\d+\W{1}\d+\s+\w+\x2F\D{3}' # ponizej 100Mbits/sec
-        patch_above_100 = r'\d+\s+\w+\x2F\D{3}' # powyzej 100 Mbits/sec
+        # ponizej 100Mbits/sec
+        patch_under_100 = r'\d+\W{1}\d+\s+\w+\x2F\D{3}'
+        # powyzej 100 Mbits/sec
+        patch_above_100 = r'\d+\s+\w+\x2F\D{3}'
         match_under_100 = re.search(patch_under_100, row)
         match_above_100 = re.search(patch_above_100, row)
 
@@ -98,7 +99,3 @@ class AnalyzeLog(object):
             result = 'Not Found!'
 
         return result
-
-# ob = analyze_log()
-# ob.get_all_data('log0')
-# ob.get_mean_value('log0','chuj')

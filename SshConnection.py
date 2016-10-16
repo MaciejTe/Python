@@ -1,6 +1,7 @@
 import paramiko
 import time
 from paramiko.ssh_exception import *
+from Error_handler import ErrorHandler as EH
 
 
 class SshConnection(object):
@@ -18,9 +19,6 @@ class SshConnection(object):
 
         """
 
-        #self.hostname = '192.168.10.2'
-        #self.username = 'maciek'
-        #self.password = 'eysuaaty'
         self.hostname = conf_data['Hostname'][host_index]
         self.username = conf_data['Username'][host_index]
         self.password = conf_data['Password'][host_index]
@@ -40,6 +38,8 @@ class SshConnection(object):
 
         """
 
+
+
         try:
             paramiko.util.log_to_file(self.PARAMIKO_FILE)
             self.s = paramiko.SSHClient()
@@ -50,17 +50,19 @@ class SshConnection(object):
             result = self.s
 
         except BadAuthenticationType:
-            print('bad_auth')
-            result = 101
+            EH(1011)
+            result = None
             self.s.close()
         except AuthenticationException:
-            print('auth_exc')
-            result = 102
+            EH(1012)
+            result = None
             self.s.close()
         except Exception as e:
+            EH(1013)
             print(e)
-            result = 103
+            result = None
             self.s.close()
+
         return result
 
     def connect_to_cpe(self, channel):
@@ -99,21 +101,15 @@ class SshConnection(object):
             time.sleep(6)
             self.ssh.send('\n' + 'exit\n')
             print(output)
-            result = 0
             connection.close()
 
         except AuthenticationException:
-            print('Incorrect username or password for CPE')
-            result = 104
+            EH(1021)
             connection.close()
         except Exception as e:
+            EH(1022)
             print(e)
-            result = 105
             connection.close()
-        # finally:
-        #     connection.close()
-
-        return result
 
 
 
