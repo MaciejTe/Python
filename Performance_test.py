@@ -10,8 +10,11 @@ from Wi_fi import Main
               help='Type of operation')
 @click.option('--udp', default='100M',
               help='UDP bandwidth for iperf; Usage: 10M, 100M, 500M, man iperf')
-def performance_test(type, udp):
+@click.option('--time', default='10', help='Time duration for each Iperf call')
+def performance_test(type, udp, time):
         udp_validation(udp)
+        time_validation(time)
+
         if type == 'single':
             single = Main()
             single.one_host()
@@ -31,13 +34,20 @@ def udp_validation(udp):
     patch2 = r'\d+'
     match1 = re.search(patch1, udp)
     match2 = re.search(patch2, udp)
-
     if match1 is not None:
         Iperf.UDP_BANDWIDTH = match1.group()
     elif match2 is not None:
         Iperf.UDP_BANDWIDTH = match2.group()
     else:
         print('UDP bandwidth has to be entered in proper form')
+        sys.exit()
+
+def time_validation(time):
+    try:
+        int(time)
+        Iperf.DURATION_TIME = time
+    except ValueError:
+        print('Incorrect value for Iperf time duration')
         sys.exit()
 
 

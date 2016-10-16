@@ -1,5 +1,6 @@
 import re
 from Error_handler import ErrorHandler as EH
+from iperf_exec import Iperf
 
 class AnalyzeLog(object):
     """Class for analyze iperf log"""
@@ -36,6 +37,9 @@ class AnalyzeLog(object):
             result = None
             boolean = False
 
+            dur_time = int(Iperf.DURATION_TIME)
+            dur_time_minus = (dur_time - 1)
+
             for row in file_input:
                 if row.find('Server Report', 0, 100) != -1:
                     boolean = True
@@ -52,8 +56,8 @@ class AnalyzeLog(object):
             if not boolean:
                 file_input = open(input_filename,'r')
                 for row in file_input:
-                    if (row.find('0.0-1', 0, 100) != -1) or \
-                       (row.find('0.0- 9', 0, 100) != -1):
+                    if (row.find('0.0-%s' % dur_time, 0, 100) != -1) or \
+                       (row.find('0.0- %s' % dur_time_minus, 0, 100) != -1):
                         result = self.__reg_exp_analyze(row)
 
                         if result != 'Not Found!':

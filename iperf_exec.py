@@ -5,8 +5,11 @@ from SshConnection import SshConnection
 
 
 class Iperf(SshConnection):
+    #GLOBAL
     DEC = ('*' * 52)
+    #STATIC
     UDP_BANDWIDTH = '100M'
+    DURATION_TIME = '10'
 
     def __init__(self, filename, conf_data, host_index):
         SshConnection.__init__(self, conf_data, host_index)
@@ -29,9 +32,11 @@ class Iperf(SshConnection):
                                     'iperf -s -i 1 -p %s'
                                     % str(self.__port_iperf))
             time.sleep(3)
-            os.system('iperf -c %s -i 1 -p %s |tee %s' %
-                      (self.__hostname, str(self.__port_iperf),
-                       self.__filename))
+            os.system('iperf -c %s -i 1 -p %s -t %s|tee %s' %
+                      (self.__hostname,
+                       str(self.__port_iperf),
+                       self.__filename,
+                       Iperf.DURATION_TIME))
 
             time.sleep(2)
             print(self.DEC)
@@ -51,9 +56,10 @@ class Iperf(SshConnection):
                       (str(self.__port_iperf), self.__filename))
             time.sleep(2)
             stdin, stdout, stderr = self.__s.exec_command(
-                                    'iperf -c %s -i 1 -p %s' %
+                                    'iperf -c %s -i 1 -p %s -t %s' %
                                     (self.__master_IP,
-                                     str(self.__port_iperf)))
+                                     str(self.__port_iperf),
+                                     Iperf.DURATION_TIME))
 
             print(stderr.read())
             time.sleep(2)
@@ -74,11 +80,12 @@ class Iperf(SshConnection):
                         'iperf -s -i 1 -u -p %s' % str(self.__port_iperf))
 
             time.sleep(3)
-            os.system('iperf -c %s -i 1 -u -b %s -p %s |tee %s' %
+            os.system('iperf -c %s -i 1 -u -b %s -p %s -t %s|tee %s' %
                      (self.__hostname,
-                      self.UDP_BANDWIDTH,
+                      Iperf.UDP_BANDWIDTH,
                       str(self.__port_iperf),
-                      self.__filename))
+                      self.__filename,
+                      Iperf.DURATION_TIME))
 
             time.sleep(2)
             print(self.DEC)
@@ -99,10 +106,11 @@ class Iperf(SshConnection):
 
             time.sleep(2)
             stdin, stdout, stderr = self.__s.exec_command(
-                'iperf -c %s -i 1 -u -b %s -p %s' %
+                'iperf -c %s -i 1 -u -b %s -p %s -t %s' %
                 (self.__master_IP,
-                 self.UDP_BANDWIDTH,
-                 str(self.__port_iperf)))
+                 Iperf.UDP_BANDWIDTH,
+                 str(self.__port_iperf),
+                 Iperf.DURATION_TIME))
 
             print(stdout.read())
             time.sleep(2)

@@ -164,8 +164,8 @@ class Main(object):
             for channel in self.conf_data['Channels']:
                 #self.run_thread('CPE_conf', channel)
 
-                self.run_thread('TCP_upload', channel)
-                self.run_thread('TCP_download', channel)
+                #self.run_thread('TCP_upload', channel)
+                #self.run_thread('TCP_download', channel)
                 self.run_thread('UDP_upload', channel)
                 self.run_thread('UDP_download', channel)
 
