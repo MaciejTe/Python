@@ -22,7 +22,7 @@ class Iperf(SshConnection):
     def tcp_download(self):
         self.__s = SshConnection.connect_to_host(self)
 
-        if type(self.__s) is int:
+        if self.__s is None:
             result = self.__s
         else:
             stdin, stdout, stderr = self.__s.exec_command(
@@ -43,7 +43,8 @@ class Iperf(SshConnection):
 
     def tcp_upload(self):
         self.__s = SshConnection.connect_to_host(self)
-        if type(self.__s) is int:
+
+        if self.__s is None:
             result = self.__s
         else:
             os.system('iperf -s -i 1 -p %s | tee %s &' %
@@ -66,10 +67,8 @@ class Iperf(SshConnection):
     def udp_download(self):
         self.__s = SshConnection.connect_to_host(self)
 
-        if self.__s is -1:
-            result = -1
-        elif self.__s is -2:
-            result = -2
+        if self.__s is None:
+            result = self.__s
         else:
             stdin, stdout, stderr = self.__s.exec_command(
                         'iperf -s -i 1 -u -p %s' % str(self.__port_iperf))
@@ -92,10 +91,8 @@ class Iperf(SshConnection):
     def udp_upload(self):
         self.__s = SshConnection.connect_to_host(self)
 
-        if self.__s is -1:
-            result = -1
-        elif self.__s is -2:
-            result = -2
+        if self.__s is None:
+            result = self.__s
         else:
             os.system('iperf -s -i 1 -u -p %s | tee %s &' %
                       (str(self.__port_iperf), self.__filename))
