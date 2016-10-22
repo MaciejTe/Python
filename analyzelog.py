@@ -20,7 +20,6 @@ class AnalyzeLog(object):
             file_input.close()
 
             return True
-
         except IOError:
             EH(3011)
             return False
@@ -57,7 +56,8 @@ class AnalyzeLog(object):
                 file_input = open(input_filename,'r')
                 for row in file_input:
                     if (row.find('0.0-%s' % dur_time, 0, 100) != -1) or \
-                       (row.find('0.0- %s' % dur_time_minus, 0, 100) != -1):
+                       (row.find('0.0- %s' % dur_time_minus, 0, 100) != -1) or \
+                       (row.find('0.0- %s' % dur_time, 0, 100) != -1):
                         result = self.__reg_exp_analyze(row)
 
                         if result != 'Not Found!':
@@ -74,7 +74,6 @@ class AnalyzeLog(object):
             file_input.close()
 
             return True
-
         except IOError:
             EH(3021)
             return False

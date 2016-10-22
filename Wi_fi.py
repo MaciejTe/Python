@@ -45,6 +45,7 @@ def error_check(run_thread):
 
     return inner
 
+
 class Main(object):
 
 
@@ -54,7 +55,6 @@ class Main(object):
         configuration = Configuration()
         self.conf_data = configuration.conf_data
         self.iter_methods = []
-
 
     @error_check
     def run_thread(self, thr_desc, channel, wait_switch=True,
@@ -117,6 +117,7 @@ class Main(object):
 
             thread.start()
             time.sleep(2)
+            
         except RuntimeError:
             EH(2011)
         except Exception as e:
@@ -175,13 +176,12 @@ class Main(object):
             for channel in self.conf_data['Channels']:
                 #self.run_thread('CPE_conf', channel)
 
-                #self.run_thread('TCP_upload', channel)
-                #self.run_thread('TCP_download', channel)
+                self.run_thread('TCP_upload', channel)
+                self.run_thread('TCP_download', channel)
                 self.run_thread('UDP_upload', channel)
                 self.run_thread('UDP_download', channel)
 
             self.write_description('END')
-
         except RuntimeError:
             EH(2041)
         except Exception as e:

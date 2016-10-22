@@ -104,3 +104,6 @@ class ErrorHandler:
 
         if self.kill_thread:
             sys.exit()
+            
+            
+            
