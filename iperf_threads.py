@@ -19,7 +19,7 @@ class IperfThreads:
         ssh_conn = SshConnection(conf_data, host_index)
 
         print("Starting " + thread_id)
-        ssh_conn.connect_to_cpe(channel)
+        ssh_conn.connect_to_cpe(channel, SshConnection.WIFI_FREQ)
 
     def run_thread(self, filename, host_index, thread_id,
                    conf_data, iperf_choice):

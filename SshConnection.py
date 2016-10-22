@@ -9,6 +9,7 @@ class SshConnection(object):
 
     # GLOBAL CONSTANTS
     PARAMIKO_FILE = 'paramiko.log'
+    WIFI_FREQ = '24'
 
     def __init__(self, conf_data, host_index):
         """Set up the necessary credentials.
@@ -65,7 +66,7 @@ class SshConnection(object):
 
         return result
 
-    def connect_to_cpe(self, channel):
+    def connect_to_cpe(self, channel, WIFI_FREQ):
         """Set the ssh connection for CPE.
 
         Args:
@@ -91,8 +92,8 @@ class SshConnection(object):
             print(output)
 
             time.sleep(4)
-            self.ssh.send('\n' + 'interface wifi24ghz channel %s'
-                          % channel + '\n')
+            self.ssh.send('\n' + 'interface wifi%sghz channel %s' %
+                         (WIFI_FREQ, channel + '\n'))
             output = self.ssh.recv(50000)
             print(output)
             time.sleep(1)
