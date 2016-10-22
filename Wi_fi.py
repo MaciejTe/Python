@@ -17,7 +17,13 @@ def error_check(run_thread):
         run_thread(self, args[0], args[1], wait_switch=options['wait_switch'],
                         host_index=options['host_index'],
                         filename=options['filename'])
-        print(EH.ERR_ACTION)
+
+        if EH.ERR_ACTION is not None:
+            with open('output.txt', 'a') as file_open:
+                with open('output_full.txt', 'a') as file_full_open:
+                    file_open.write('!!!!!!\n' + EH.ERR_DESC + '\n!!!!!!')
+                    file_full_open.write('!!!!!!\n' + EH.ERR_DESC + '\n!!!!!!')
+
         if EH.ERR_ACTION is 1:
             time.sleep(10)
             print('!!!Error!!!:')
