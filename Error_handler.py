@@ -11,8 +11,10 @@ import sys
 
 class ErrorHandler:
 
-    # Global variables
+    # Class variables
     ERR_ACTION = None
+    ERR_DESC = None
+    ERR_CODE = None
 
     def __init__(self, err_code, kill_thread=True):
 
@@ -95,7 +97,7 @@ class ErrorHandler:
 
         if err_code in self.err_dict:
             result = self.err_dict[err_code]
-
+            ErrorHandler.ERR_DESC = result[0]
             print('!!!ERROR %s !!!: %s' % (err_code, result[0]))
             ErrorHandler.ERR_ACTION = result[1]
         else:
