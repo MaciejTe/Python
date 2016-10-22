@@ -71,7 +71,7 @@ class ErrorHandler:
                                 'Method: get_mean_value', 1),
                          3022: ('Exception: ValueError,\n '
                                 'Class: AnalyzeLog'
-                                'Method: get_mean_value', 2),
+                                'Method: get_mean_value', 1),
                          3023: ('Exception: ValueError,\n '
                                 'Class: AnalyzeLog'
                                 'Method: get_mean_value', 2),

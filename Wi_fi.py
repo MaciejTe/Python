@@ -17,7 +17,10 @@ def error_check(run_thread):
         run_thread(self, args[0], args[1], wait_switch=options['wait_switch'],
                         host_index=options['host_index'],
                         filename=options['filename'])
-        print(EH.ERR_ACTION)
+        #print(EH.ERR_ACTION)
+
+        #if EH.ERR_ACTION is not None:
+
         if EH.ERR_ACTION is 1:
             time.sleep(10)
             print('!!!Error!!!:')
@@ -39,6 +42,8 @@ def error_check(run_thread):
             print(EH.ERR_CODE)
             print('!!!ACTION!!!: Terminate program.')
             sys.exit()
+
+
 
         EH.ERR_ACTION = None
         EH.ERR_CODE = None
@@ -176,10 +181,10 @@ class Main(object):
             for channel in self.conf_data['Channels']:
                 #self.run_thread('CPE_conf', channel)
 
-                self.run_thread('TCP_upload', channel)
-                self.run_thread('TCP_download', channel)
+                #self.run_thread('TCP_upload', channel)
+                #self.run_thread('TCP_download', channel)
                 self.run_thread('UDP_upload', channel)
-                self.run_thread('UDP_download', channel)
+                #self.run_thread('UDP_download', channel)
 
             self.write_description('END')
         except RuntimeError:
