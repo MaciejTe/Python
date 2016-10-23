@@ -12,12 +12,12 @@ from SshConnection import SshConnection as SSH
 @click.option('--udp', default='100M',
               help='UDP bandwidth for iperf; Usage: 10M, 100M, 500M, man iperf')
 @click.option('--time', default='10', help='Time duration for each Iperf call')
-@click.option('--freq', default='24', help='Wi-fi frequency choice ; '
-                                           'default value=2.4 GHz')
+@click.option('--freq', default='24', type=click.Choice(['24', '5']),
+              help='Wi-fi frequency choice ; default value=2.4 GHz')
 def performance_test(type, udp, time, freq):
         udp_validation(udp)
         time_validation(time)
-        freq_validation(freq)
+        # freq_validation(freq)
 
         if type == 'single':
             single = Main()
@@ -53,18 +53,6 @@ def time_validation(time):
     except ValueError:
         print('Incorrect value for Iperf time duration')
         sys.exit()
-
-def freq_validation(freq):
-    try:
-        if freq == '2.4':
-            SSH.WIFI_FREQ = '24'
-        elif freq == '5':
-            SSH.WIFI_FREQ = '5'
-    except ValueError:
-        print('Incorrect value for Wi-fi frequency ; 24 or \'5\' values \n'
-              'are accepted ')
-        sys.exit()
-
 
 
 if __name__ == '__main__':
