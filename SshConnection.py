@@ -71,6 +71,7 @@ class SshConnection(object):
 
         Args:
             channel (str): router channel.
+            # TODO: WIFI_FREQ
 
         Returns:
             result: 0 (int) for success,
