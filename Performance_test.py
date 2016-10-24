@@ -17,7 +17,6 @@ from SshConnection import SshConnection as SSH
 def performance_test(type, udp, time, freq):
         udp_validation(udp)
         time_validation(time)
-        # freq_validation(freq)
 
         if type == 'single':
             single = Main()
@@ -31,7 +30,7 @@ def performance_test(type, udp, time, freq):
             multiple = Main()
             single.one_host()
             multiple.multiple_hosts()
-            #PRZETESTOWAC!
+
 
 def udp_validation(udp):
     patch1 = r'\d+\x4D'
@@ -46,6 +45,7 @@ def udp_validation(udp):
         print('UDP bandwidth has to be entered in proper form')
         sys.exit()
 
+
 def time_validation(time):
     try:
         int(time)
@@ -58,6 +58,4 @@ def time_validation(time):
 if __name__ == '__main__':
     performance_test()
 
-#TODO
-#help
-#
+

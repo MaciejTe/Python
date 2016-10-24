@@ -8,6 +8,7 @@ class AnalyzeLog(object):
     FILE_FULL = 'output_full.txt'
     FILE_OUTPUT = 'output.txt'
 
+
     def get_all_data(self, input_filename, thread_id):
 
         try:
@@ -20,6 +21,7 @@ class AnalyzeLog(object):
             file_input.close()
 
             return True
+
         except IOError:
             EH(3011)
             return False
@@ -30,62 +32,69 @@ class AnalyzeLog(object):
 
     def get_mean_value(self, input_filename, thread_description):
         try:
-            file_output = open(self.FILE_OUTPUT, 'a')
-            file_input = open(input_filename, 'r')
-
-            result = None
-            boolean = False
-
             dur_time = int(Iperf.DURATION_TIME)
             dur_time_minus = (dur_time - 1)
+            patterns = ['Server Report',
+                        '0.0-%s' % dur_time,
+                        '0.0- %s' % dur_time_minus,
+                        '0.0- %s' % dur_time,
+                        '0.0-%s' % dur_time_minus]
+            rows = []
+            
+            with open(input_filename, 'r') as file_input:
+                rows = file_input.readlines()
 
-            for row in file_input:
-                if row.find('Server Report', 0, 100) != -1:
-                    boolean = True
-                    continue
-                if boolean:
-                    result = self.__reg_exp_analyze(row)
+            endflag = False
+            result = None
+            search_res = None
+            
+            patt_count = -1
+            for patt in patterns:
+                patt_count += 1
+                search_res = map(lambda row: row.find(patt, 0, 100), rows)
+                if reduce(lambda x, y: x+y, search_res) != (-1 * len(rows)):
+                    endflag = True
+                    break
 
-                    if result != 'Not Found!':
-                        file_output.write(thread_description
-                                          + '\t' + result + '\n')
-                        break
-                    else:
-                        raise ValueError('!!!!WARNING!!!! Value not found')
-            if not boolean:
-                file_input = open(input_filename,'r')
-                for row in file_input:
-                    if (row.find('0.0-%s' % dur_time, 0, 100) != -1) or \
-                       (row.find('0.0- %s' % dur_time_minus, 0, 100) != -1) or \
-                       (row.find('0.0- %s' % dur_time, 0, 100) != -1):
-                        result = self.__reg_exp_analyze(row)
+            if not endflag:
+                raise ValueError
 
-                        if result != 'Not Found!':
-                            file_output.write(thread_description
-                                              + '\t ' + result + '\n')
-                            break
-                        else:
-                            raise ValueError('!!!!WARNING!!!! Value not found')
+            pos_count = 0
+            for pos in search_res:
+                if pos is not -1:
+                    break
+                else:
+                    pos_count += 1
 
-            if result is None:
-                raise ValueError('!!!!WARNING!!!! Row not found')
+            if patt_count is 0:
+                result = self.reg_exp_analyze(rows[pos_count+1])
+            else:
+                result = self.reg_exp_analyze(rows[pos_count])
 
-            file_output.close()
-            file_input.close()
+            if result != 'Not Found!':
+                with open(self.FILE_OUTPUT, 'a') as file_output:
+                    file_output.write(thread_description
+                                      + '\t' + result + '\n')
 
+            else:
+                raise ValueError
+            
             return True
-        except IOError:
+            
+        except IOError as ie:
             EH(3021)
+            print(ie)
             return False
         except ValueError as ve:
             EH(3022)
+            print(ve)
             return False
         except Exception as e:
             EH(3023)
             print(e)
             return False
 
-    def __reg_exp_analyze(self, row):
+    def reg_exp_analyze(self, row):
 
         # ponizej 100Mbits/sec
         patch_under_100 = r'\d+\W{1}\d+\s+\w+\x2F\D{3}'
@@ -102,3 +111,6 @@ class AnalyzeLog(object):
             result = 'Not Found!'
 
         return result
+
+#ob = AnalyzeLog()
+#print(ob.get_mean_value('log0', 'thrdesc'))
