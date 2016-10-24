@@ -71,6 +71,7 @@ class SshConnection(object):
 
         Args:
             channel (str): router channel.
+            WIFI_FREQ (str): Wi-fi frequency.
 
         Returns:
             result: 0 (int) for success,

@@ -5,6 +5,8 @@ from SshConnection import SshConnection
 
 
 class Iperf(SshConnection):
+    """Class defining methods based on iperf"""
+
     #GLOBAL
     DEC = ('*' * 52)
     #STATIC
@@ -23,6 +25,12 @@ class Iperf(SshConnection):
         self.__s = None
 
     def tcp_download(self):
+        """Method calling iperf TCP server on master host and iperf TCP client
+           on Wi-fi host.
+
+            Returns:
+                result: 0 for success.
+        """
         self.__s = SshConnection.connect_to_host(self)
 
         if self.__s is None:
@@ -47,6 +55,12 @@ class Iperf(SshConnection):
         return result
 
     def tcp_upload(self):
+        """Method calling iperf TCP client on master host and iperf TCP server
+           on Wi-fi host.
+
+                    Returns:
+                        result: 0 for success.
+        """
         self.__s = SshConnection.connect_to_host(self)
 
         if self.__s is None:
@@ -71,6 +85,12 @@ class Iperf(SshConnection):
         return result
 
     def udp_download(self):
+        """Method calling iperf UDP server on master host and iperf UDP client
+           on Wi-fi host.
+
+            Returns:
+                result: 0 for success.
+        """
         self.__s = SshConnection.connect_to_host(self)
 
         if self.__s is None:
@@ -96,6 +116,12 @@ class Iperf(SshConnection):
         return result
 
     def udp_upload(self):
+        """Method calling iperf UDP server on master host and iperf UDP client
+                   on Wi-fi host.
+
+            Returns:
+                result: 0 for success.
+        """
         self.__s = SshConnection.connect_to_host(self)
 
         if self.__s is None:
@@ -120,13 +146,3 @@ class Iperf(SshConnection):
             result = 0
 
         return result
-
-    def list_parameters(self):
-        print(self.__hostname,
-              self.__port_iperf,
-              self.__port_SSH,
-              self.__username,
-              self.__password,
-              self.__master_IP,
-              self.__s)
-### komentarz

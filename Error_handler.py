@@ -10,6 +10,8 @@ import sys
 
 
 class ErrorHandler:
+    """Class defining fault codes and error handling."""
+
 
     # Class variables
     ERR_ACTION = None
@@ -17,7 +19,16 @@ class ErrorHandler:
     ERR_CODE = None
 
     def __init__(self, err_code, kill_thread=True):
+        """Set up necessary fault codes.
 
+        Err_dict dictionary contains:
+            * key: fault code
+            * value: tuple containing:
+                - exception name, class name and method
+                  which returned fault code (str)
+                - action type (int): 1 - try again, repeat part of code,
+                                     2 - terminate program
+        """
         self.kill_thread = kill_thread
         self.err_dict = {
                          1011: ('Exception: BadAuthenticationType,\n'
@@ -94,7 +105,11 @@ class ErrorHandler:
 
 
     def err_search(self, err_code):
+        """Method for searching error codes in err_dict
 
+            Args:
+                err_code (int): error code
+        """
         if err_code in self.err_dict:
             result = self.err_dict[err_code]
             ErrorHandler.ERR_DESC = result[0]

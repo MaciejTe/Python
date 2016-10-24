@@ -2,6 +2,7 @@ from configobj import ConfigObj
 from Error_handler import ErrorHandler as EH
 
 class Configuration(object):
+    """"""
     FILENAME = "conf.ini"
 
     def __init__(self):
@@ -12,6 +13,13 @@ class Configuration(object):
             self.conf_data = None
 
     def validation(self):
+        """Method validating configuration file.
+
+            Returns:
+                True for success,
+                False for fail.
+
+        """
         # sprawdzic czy plik istnieje i nie jest pusty | modul OS - isfile
         result = True
         len_list = [len(self.conf_data['Username']),
@@ -41,6 +49,11 @@ class Configuration(object):
         return result
 
     def change_data_struct(self):
+        """Method for changing data structure which is needed for further use.
+
+            Returns:
+                structure:
+        """
         structure = {}
         temp_list = []
         try:
