@@ -217,8 +217,3 @@ class Main(object):
         except Exception as e:
             EH(2052)
             print(e)
-
-
-#ob = Main()
-#ob.one_host()
-#ob.multiple_hosts()
