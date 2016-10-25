@@ -2,14 +2,13 @@ import mock
 import unittest
 import sys
 import os
-import random
 import itertools
 
 sys.path.insert(0, 'C:\Users\LukaszP\Documents\Repos\WiFi_perf')
 
 from analyzelog import AnalyzeLog as AL
 from analyzelog import EH
-from analyzelog import re
+
 
 class TestAnalyzeLog(unittest.TestCase):
     def setUp(self):
@@ -18,6 +17,8 @@ class TestAnalyzeLog(unittest.TestCase):
         self.file_output = 'output.txt'
         self.input_filename = 'input.txt'
         self.thread_id = 'test_thread_id'
+
+        self.durat_time = '5'
 
         self.logmock = mock.MagicMock(name='analyzelog', spec=AL)
         self.ehmock = mock.MagicMock(name='errorhandler', type=EH)
@@ -54,13 +55,14 @@ class TestAnalyzeLog(unittest.TestCase):
         self.assertFalse(result)
         mock_open.reset_mock()
 
+    @mock.patch('analyzelog.Iperf')
     @mock.patch('analyzelog.EH')
-    def test_getmeanvalue(self, mock_eh):
+    def test_getmeanvalue(self, mock_eh, mock_iperf):
+        mock_iperf.DURATION_TIME = self.durat_time
         mock_eh.return_value = True
-        durat_time = '5'
         udp_test_row = 'test_row'
         notf_row = 'notfoundrow'
-        dur_time = int(durat_time)
+        dur_time = int(self.durat_time)
         dur_time_minus = (dur_time - 1)
         patterns = ['Server Report',
                     '0.0-%s' % dur_time,
@@ -71,15 +73,12 @@ class TestAnalyzeLog(unittest.TestCase):
         # ///test patterns[1] pass///
         self.logmock.reg_exp_analyze.return_value = 'OK'
         self.logmock.FILE_OUTPUT = self.file_output
-        self.logmock.DURATION_TIME = durat_time
-        for i in self.logmock.__dict__:
-            print(i, self.logmock.__dict__[i])
 
         with open(self.input_filename, 'a') as input_file:
             input_file.write(patterns[1])
         
         result = AL.get_mean_value(self.logmock, self.input_filename,
-                                   'threaddesc')
+                                   self.thread_id)
 
         self.assertTrue(patterns[1] in str(self.logmock.mock_calls))
         self.assertTrue(result)
@@ -92,13 +91,13 @@ class TestAnalyzeLog(unittest.TestCase):
         # ///test patterns[2] pass///
         self.logmock.reg_exp_analyze.return_value = 'OK'
         self.logmock.FILE_OUTPUT = self.file_output
-        self.logmock.DURATION_TIME = durat_time
+        self.logmock.DURATION_TIME = self.durat_time
         
         with open(self.input_filename, 'a') as input_file:
             input_file.write(patterns[2])
         
         result = AL.get_mean_value(self.logmock, self.input_filename,
-                                   'threaddesc')
+                                   self.thread_id)
         self.assertTrue(patterns[2] in str(self.logmock.mock_calls))
         self.assertTrue(result)
         if os.path.isfile(self.file_output):
@@ -110,13 +109,13 @@ class TestAnalyzeLog(unittest.TestCase):
         # ///test patterns[3] pass///
         self.logmock.reg_exp_analyze.return_value = 'OK'
         self.logmock.FILE_OUTPUT = self.file_output
-        self.logmock.DURATION_TIME = durat_time
+        self.logmock.DURATION_TIME = self.durat_time
         
         with open(self.input_filename, 'a') as input_file:
             input_file.write(patterns[3])
         
         result = AL.get_mean_value(self.logmock, self.input_filename,
-                                   'threaddesc')
+                                   self.thread_id)
         self.assertTrue(patterns[3] in str(self.logmock.mock_calls))
         self.assertTrue(result)
         if os.path.isfile(self.file_output):
@@ -128,13 +127,13 @@ class TestAnalyzeLog(unittest.TestCase):
         # ///test patterns[4] pass///
         self.logmock.reg_exp_analyze.return_value = 'OK'
         self.logmock.FILE_OUTPUT = self.file_output
-        self.logmock.DURATION_TIME = durat_time
+        self.logmock.DURATION_TIME = self.durat_time
         
         with open(self.input_filename, 'a') as input_file:
             input_file.write(patterns[4])
         
         result = AL.get_mean_value(self.logmock, self.input_filename,
-                                   'threaddesc')
+                                   self.thread_id)
         self.assertTrue(patterns[4] in str(self.logmock.mock_calls))
         self.assertTrue(result)
         if os.path.isfile(self.file_output):
@@ -146,14 +145,14 @@ class TestAnalyzeLog(unittest.TestCase):
         # ///test patterns[0] (udp) pass///
         self.logmock.reg_exp_analyze.return_value = 'OK'
         self.logmock.FILE_OUTPUT = self.file_output
-        self.logmock.DURATION_TIME = durat_time
+        self.logmock.DURATION_TIME = self.durat_time
         
         with open(self.input_filename, 'a') as input_file:
             input_file.write(patterns[0] +'\n')
             input_file.write(udp_test_row)
         
         result = AL.get_mean_value(self.logmock, self.input_filename,
-                                   'threaddesc')
+                                   self.thread_id)
         self.assertTrue(udp_test_row in str(self.logmock.mock_calls))
         self.assertTrue(result)
         if os.path.isfile(self.file_output):
@@ -164,13 +163,13 @@ class TestAnalyzeLog(unittest.TestCase):
 
         # ///test endflag = False///
         self.logmock.FILE_OUTPUT = self.file_output
-        self.logmock.DURATION_TIME = durat_time
+        self.logmock.DURATION_TIME = self.durat_time
         
         with open(self.input_filename, 'a') as input_file:
             input_file.write(notf_row)
         
         result = AL.get_mean_value(self.logmock, self.input_filename,
-                                   'threaddesc')
+                                   self.thread_id)
         self.assertFalse(result)
         if os.path.isfile(self.file_output):
             os.remove(self.file_output)
@@ -181,13 +180,13 @@ class TestAnalyzeLog(unittest.TestCase):
         # ///test result = 'Not Found!'///
         self.logmock.reg_exp_analyze.return_value = 'Not Found!'
         self.logmock.FILE_OUTPUT = self.file_output
-        self.logmock.DURATION_TIME = durat_time
+        self.logmock.DURATION_TIME = self.durat_time
         
         with open(self.input_filename, 'a') as input_file:
             input_file.write(patterns[4])
         
         result = AL.get_mean_value(self.logmock, self.input_filename,
-                                   'threaddesc')
+                                   self.thread_id)
         self.assertTrue(patterns[4] in str(self.logmock.mock_calls))
         self.assertFalse(result)
         if os.path.isfile(self.file_output):
@@ -204,7 +203,7 @@ class TestAnalyzeLog(unittest.TestCase):
             input_file.write(patterns[1])
         
         result = AL.get_mean_value(self.logmock, self.input_filename,
-                                   'threaddesc')    
+                                   self.thread_id)
         self.assertFalse(result)
         self.assertTrue(self.logmock.mock_calls)
         if os.path.isfile(self.file_output):
@@ -221,7 +220,7 @@ class TestAnalyzeLog(unittest.TestCase):
             input_file.write(patterns[1])
         
         result = AL.get_mean_value(self.logmock, self.input_filename,
-                                   'threaddesc')    
+                                   self.thread_id)
         self.assertFalse(result)
         self.assertTrue(self.logmock.mock_calls)
         if os.path.isfile(self.file_output):
@@ -243,7 +242,7 @@ class TestAnalyzeLog(unittest.TestCase):
                 result = AL.reg_exp_analyze(self.logmock, row)
                 self.assertEqual(result, exp_vals[i])
                 i += 1
-        
+
 
 def filling_input_file(filename):
     with open(filename, 'a') as input_file:
@@ -259,10 +258,6 @@ def filling_input_file(filename):
         
         for i in cart_val:
             input_file.write(i[0] +i[1] +'\n')
-
-        #cart_val = itertools.product(bandw_val, bandw_units)
-        #for i in cart_val:
-            #input_file.write(i[0] +i[1] +'\n')
         
         input_file.write(notfound_val +'\n')
             

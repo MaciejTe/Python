@@ -136,5 +136,5 @@ class AnalyzeLog(object):
 
         return result
 
-#ob = AnalyzeLog()
-#print(ob.get_mean_value('log0', 'thrdesc'))
+# ob = AnalyzeLog()
+# print(ob.get_mean_value('input.txt', 'thrdesc'))
