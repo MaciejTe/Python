@@ -10,7 +10,16 @@ class AnalyzeLog(object):
 
 
     def get_all_data(self, input_filename, thread_id):
+        """Method retrieving all data from iperf
 
+            Args:
+                input_filename (str): Input filename
+                thread_id (str): Thread identification
+
+            Returns:
+                True if success,
+                False if fail.
+        """
         try:
             file_output_full = open(self.FILE_FULL, 'a')
             file_input = open(input_filename, 'r')
@@ -31,6 +40,16 @@ class AnalyzeLog(object):
             return False
 
     def get_mean_value(self, input_filename, thread_description):
+        """Method retrieving mean value from input file.
+
+            Args:
+                input_filename (str): input file
+                thread_description (str): Thread description.
+
+            Returns:
+                True if success,
+                False if fail.
+        """
         try:
             dur_time = int(Iperf.DURATION_TIME)
             dur_time_minus = (dur_time - 1)
@@ -95,6 +114,11 @@ class AnalyzeLog(object):
             return False
 
     def reg_exp_analyze(self, row):
+        """Method containing regular expression for get_mean_value method.
+
+            Args:
+                row (str): Row containing desired information
+        """
 
         # ponizej 100Mbits/sec
         patch_under_100 = r'\d+\W{1}\d+\s+\w+\x2F\D{3}'

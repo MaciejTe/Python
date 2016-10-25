@@ -15,6 +15,14 @@ from SshConnection import SshConnection as SSH
 @click.option('--freq', default='24', type=click.Choice(['24', '5']),
               help='Wi-fi frequency choice ; default value=2.4 GHz')
 def performance_test(type, udp, time, freq):
+    """Method for executing single, multiple and both methods
+
+        Args:
+            type (str): type of script operation
+            udp (str): udp bandwidth
+            time (str): iperf time duration
+            freq (str): Wi-fi frequency choice
+    """
         udp_validation(udp)
         time_validation(time)
 
@@ -33,6 +41,11 @@ def performance_test(type, udp, time, freq):
 
 
 def udp_validation(udp):
+    """Method validating udp parameter input.
+
+        Args:
+            udp (str): UDP bandwidth
+    """
     patch1 = r'\d+\x4D'
     patch2 = r'\d+'
     match1 = re.search(patch1, udp)
@@ -47,6 +60,11 @@ def udp_validation(udp):
 
 
 def time_validation(time):
+    """Method validating time parameter input.
+
+        Args:
+            time (str): iperf time duration
+    """
     try:
         int(time)
         Iperf.DURATION_TIME = time
