@@ -10,7 +10,7 @@ class AnalyzeLog(object):
 
 
     def get_all_data(self, input_filename, thread_id):
-        """Method retrieving all data from iperf
+        """Method retrieving all output data from iperf
 
             Args:
                 input_filename (str): Input filename
@@ -57,7 +57,12 @@ class AnalyzeLog(object):
                         '0.0-%s' % dur_time,
                         '0.0- %s' % dur_time_minus,
                         '0.0- %s' % dur_time,
-                        '0.0-%s' % dur_time_minus]
+                        '0.0-%s' % dur_time_minus,
+                        '0.0-%s' % (dur_time + 1),
+                        '0.0-%s' % (dur_time + 2),
+                        '0.0-%s' % (dur_time + 3),
+                        '0.0-%s' % (dur_time + 4),
+                        '0.0-%s' % (dur_time + 5)]
             rows = []
             
             with open(input_filename, 'r') as file_input:
@@ -101,16 +106,16 @@ class AnalyzeLog(object):
             return True
             
         except IOError as ie:
-            EH(3021)
             print(ie)
+            EH(3021)
             return False
         except ValueError as ve:
-            EH(3022)
             print(ve)
+            EH(3022)
             return False
         except Exception as e:
-            EH(3023)
             print(e)
+            EH(3023)
             return False
 
     def reg_exp_analyze(self, row):
@@ -118,6 +123,10 @@ class AnalyzeLog(object):
 
             Args:
                 row (str): Row containing desired information
+
+            Returns:
+                result (str) if success;
+                'Not found' if fail.
         """
 
         # ponizej 100Mbits/sec
@@ -135,6 +144,3 @@ class AnalyzeLog(object):
             result = 'Not Found!'
 
         return result
-
-# ob = AnalyzeLog()
-# print(ob.get_mean_value('input.txt', 'thrdesc'))

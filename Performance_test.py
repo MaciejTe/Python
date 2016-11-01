@@ -3,11 +3,10 @@ import re
 import sys
 from iperf_exec import Iperf
 from Wi_fi import Main
-from SshConnection import SshConnection as SSH
 
 
 @click.command()
-@click.option('--type', type=click.Choice(['single', 'multiple', 'both']),
+@click.option('--type', type=click.Choice(['single', 'multi', 'both']),
               help='Type of operation')
 @click.option('--udp', default='100M',
               help='UDP bandwidth for iperf; Usage: 10M, 100M, 500M, man iperf')
@@ -23,21 +22,21 @@ def performance_test(type, udp, time, freq):
             time (str): iperf time duration
             freq (str): Wi-fi frequency choice
     """
-        udp_validation(udp)
-        time_validation(time)
-
-        if type == 'single':
-            single = Main()
-            single.one_host()
-        elif type == 'multiple':
-            multiple = Main()
-            multiple.multiple_hosts()
-            #TODO
-        elif type == 'both':
-            single = Main()
-            multiple = Main()
-            single.one_host()
-            multiple.multiple_hosts()
+    udp_validation(udp)
+    time_validation(time)
+    print(Iperf.UDP_BANDWIDTH)
+    if type == 'single':
+        single = Main()
+        single.one_host()
+    elif type == 'multi':
+        multiple = Main()
+        multiple.multiple_hosts()
+        #TODO
+    elif type == 'both':
+        single = Main()
+        multiple = Main()
+        single.one_host()
+        multiple.multiple_hosts()
 
 
 def udp_validation(udp):
@@ -46,14 +45,14 @@ def udp_validation(udp):
         Args:
             udp (str): UDP bandwidth
     """
+
+    if '.' in udp or udp[0] == '0':
+        print('UDP bandwidth has to be entered in proper form')
+        sys.exit()
     patch1 = r'\d+\x4D'
-    patch2 = r'\d+'
     match1 = re.search(patch1, udp)
-    match2 = re.search(patch2, udp)
     if match1 is not None:
         Iperf.UDP_BANDWIDTH = match1.group()
-    elif match2 is not None:
-        Iperf.UDP_BANDWIDTH = match2.group()
     else:
         print('UDP bandwidth has to be entered in proper form')
         sys.exit()

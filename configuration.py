@@ -20,14 +20,18 @@ class Configuration(object):
                 False for fail.
 
         """
-        # sprawdzic czy plik istnieje i nie jest pusty | modul OS - isfile
-        result = True
-        len_list = [len(self.conf_data['Username']),
-                    len(self.conf_data['Hostname']),
-                    len(self.conf_data['Password']),
-                    len(self.conf_data['Port']),
-                    ]
+
         try:
+            result = True
+            len_list = [len(self.conf_data['Username']),
+                        len(self.conf_data['Hostname']),
+                        len(self.conf_data['Password']),
+                        len(self.conf_data['Port']),
+                        ]
+
+            if len_list[0] is 0:
+                result = False
+                raise ValueError
             if (sum(len_list) / len(len_list)) is not len_list[0]:
                 result = False
                 raise ValueError
@@ -40,6 +44,8 @@ class Configuration(object):
             if len(self.conf_data['Channels']) is 0:
                 result = False
                 raise ValueError
+        except KeyError:
+            EH(4013)
         except ValueError:
             EH(4011)
         except Exception as e:
@@ -65,6 +71,4 @@ class Configuration(object):
             return structure
         except LookupError:
             EH(4021, kill_thread=False)
-
-
 

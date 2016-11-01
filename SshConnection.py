@@ -7,7 +7,7 @@ from Error_handler import ErrorHandler as EH
 class SshConnection(object):
     """Class for create SSH connection with hosts and CPE."""
 
-    # GLOBAL CONSTANTS
+    # CONSTANTS
     PARAMIKO_FILE = 'paramiko.log'
     WIFI_FREQ = '24'
 
@@ -38,8 +38,6 @@ class SshConnection(object):
                     error code (int) otherwise.
 
         """
-
-
 
         try:
             paramiko.util.log_to_file(self.PARAMIKO_FILE)
@@ -78,7 +76,7 @@ class SshConnection(object):
                     error code (int) otherwise.
 
         """
-        connection = None  # ????????
+        connection = None
 
         try:
             paramiko.util.log_to_file(self.PARAMIKO_FILE)

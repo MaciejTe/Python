@@ -32,77 +32,79 @@ class ErrorHandler:
         self.kill_thread = kill_thread
         self.err_dict = {
                          1011: ('Exception: BadAuthenticationType,\n'
-                                'Class: SshConnection, '
+                                'Class: SshConnection '
                                 'Method: connect_to_host.', 2),
                          1012: ('Exception: AuthenticationException,\n'
-                                'Class: SshConnection'
+                                'Class: SshConnection '
                                 'Method: connect_to_host', 2),
                          1013: ('Exception: unknown,\n '
                                 'Class: SshConnection '
                                 'Method: connect_to_host.', 1),
                          1021: ('Exception: AuthenticationException,\n '
-                                'Class: SshConnection'
+                                'Class: SshConnection '
                                 'Method: connect_to_cpe.', 2),
                          1022: ('Exception: unknown,\n '
-                                'Class: SshConnection'
+                                'Class: SshConnection '
                                 'Method: connect_to_cpe', 1),
                          2011: ('Exception: RuntimeError,\n '
-                                'Class: Main'
+                                'Class: Main '
                                 'Method: run_thread', 1),
                          2012: ('Exception: unknown,\n '
-                                'Class: Main'
+                                'Class: Main '
                                 'Method: run_thread', 1),
                          2021: ('Exception: RuntimeError,\n '
-                                'Class: Main'
+                                'Class: Main '
                                 'Method: write_description', 1),
                          2031: ('Exception: IOError,\n '
-                                'Class: Main'
+                                'Class: Main '
                                 'Method: write_description', 1),
                          2032: ('Exception: unknown,\n '
-                                'Class: Main'
+                                'Class: Main '
                                 'Method: write_description', 1),
                          2041: ('Exception: RuntimeError,\n '
-                                'Class: Main'
+                                'Class: Main '
                                 'Method: one_host', 2),
                          2042: ('Exception: unknown,\n '
-                                'Class: Main'
+                                'Class: Main '
                                 'Method: one_host', 2),
                          2051: ('Exception: RuntimeError,\n '
-                                'Class: Main'
+                                'Class: Main '
                                 'Method: multiple_hosts', 2),
                          2052: ('Exception: unknown,\n '
-                                'Class: Main'
+                                'Class: Main '
                                 'Method: multiple_hosts', 2),
                          3011: ('Exception: IOError,\n '
-                                'Class: AnalyzeLog'
+                                'Class: AnalyzeLog '
                                 'Method: get_all_data', 1),
                          3012: ('Exception: unknown,\n '
-                                'Class: AnalyzeLog'
+                                'Class: AnalyzeLog '
                                 'Method: get_all_data', 1),
                          3021: ('Exception: IOError,\n '
-                                'Class: AnalyzeLog'
+                                'Class: AnalyzeLog '
                                 'Method: get_mean_value', 1),
                          3022: ('Exception: ValueError,\n '
-                                'Class: AnalyzeLog'
+                                'Class: AnalyzeLog '
                                 'Method: get_mean_value', 1),
                          3023: ('Exception: ValueError,\n '
-                                'Class: AnalyzeLog'
+                                'Class: AnalyzeLog '
                                 'Method: get_mean_value', 2),
                          4011: ('Exception: ValueError,\n '
-                                'Class: Configuration'
+                                'Class: Configuration '
                                 'Method: validation', 2),
-                         4012: ('Exception: ValueError,\n '
-                                'Class: Configuration'
+                         4012: ('Exception: unknown,\n '
+                                'Class: Configuration '
                                 'Method: validation', 2),
+                         4013: ('Exception: KeyError,\n '
+                                'Class: Configuration'
+                                'Method: validation ', 2),
                          4021: ('Exception: LookupError,\n '
-                                'Class: Configuration'
+                                'Class: Configuration '
                                 'Method: change_data_struct', 2),
 
 
         }
 
         self.err_search(err_code)
-
 
     def err_search(self, err_code):
         """Method for searching error codes in err_dict
@@ -121,6 +123,3 @@ class ErrorHandler:
 
         if self.kill_thread:
             sys.exit()
-            
-            
-            

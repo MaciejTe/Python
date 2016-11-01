@@ -1,10 +1,11 @@
+
 import mock
 import unittest
 import sys
 import os
 import itertools
 
-sys.path.insert(0, 'C:\Users\LukaszP\Documents\Repos\WiFi_perf')
+sys.path.insert(0, '/home/maciek/Documents/Git/Wi-fi performance')
 
 from analyzelog import AnalyzeLog as AL
 from analyzelog import EH
@@ -246,8 +247,8 @@ class TestAnalyzeLog(unittest.TestCase):
 
 def filling_input_file(filename):
     with open(filename, 'a') as input_file:
-        bandw_units = ['Mbits/sec', 'kbits/sec', 'bits/sec']
-        bandw_val = ['1', '10', '100', '1000', '10000', '100000']
+        bandw_units = ['Mbits/sec', 'Kbits/sec', 'bits/sec']
+        bandw_val = ['1', '10', '100', '1000']
         notfound_val = 'Not Found!'
         cart_val = itertools.product(bandw_val, bandw_val)
         input_list = []
@@ -258,9 +259,12 @@ def filling_input_file(filename):
         
         for i in cart_val:
             input_file.write(i[0] +i[1] +'\n')
+
+        cart_val = itertools.product(bandw_val, bandw_units)
+        for i in cart_val:
+            input_file.write(i[0] +' ' +i[1] +'\n')
         
         input_file.write(notfound_val +'\n')
-            
-            
+
 if __name__ == '__main__':
     unittest.main()

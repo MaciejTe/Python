@@ -2,6 +2,7 @@ import time
 import threading
 import sys
 import datetime
+import os
 
 from iperf_threads import *
 from Error_handler import ErrorHandler as EH
@@ -31,9 +32,9 @@ def error_check(run_thread):
             print('!!!ACTION!!!: Repeat previous thread.')
 
             run_thread(self, args[0], args[1],
-                            options['wait_switch'],
-                            options['host_index'],
-                            options['filename'])
+                       options['wait_switch'],
+                       options['host_index'],
+                       options['filename'])
             if EH.ERR_ACTION is not None:
                 print('!!!Error!!!:')
                 print(EH.ERR_CODE)
@@ -45,8 +46,9 @@ def error_check(run_thread):
             print(EH.ERR_CODE)
             print('!!!ACTION!!!: Terminate program.')
             sys.exit()
-
-
+            # 1. stworzyc liste watkow ktore aktualnie zyja
+            # 2. posortowac zeby Main byl przedostatni, ostatni watek to ten w ktorym sie obecnie znajdujemy
+            # 3. uwalic zgodnie z lista
 
         EH.ERR_ACTION = None
         EH.ERR_CODE = None
@@ -56,12 +58,12 @@ def error_check(run_thread):
 
 class Main(object):
 
-
     def __init__(self):
         # TODO
         # self!
         configuration = Configuration()
         self.conf_data = configuration.conf_data
+        self.host_amount = len(self.conf_data['Username'])
         self.iter_methods = []
 
     @error_check
@@ -120,7 +122,7 @@ class Main(object):
             self.iter_methods.remove('CPE_conf')
             self.iter_methods.sort()
         try:
-            #
+
             thread = threads[thr_desc]
 
             thread.start()
@@ -137,6 +139,7 @@ class Main(object):
     def wait_for_thread(self, switch=True):
         try:
             if switch:
+                # JOIN !!!!!!!!!!!!!!!!!!!!
                 while len(threading.enumerate()) is not 1:
                     pass
         except RuntimeError:
@@ -175,14 +178,12 @@ class Main(object):
             EH(2032)
             print(e)
 
-
-
     def one_host(self):
         try:
             self.write_description('START')
 
             for channel in self.conf_data['Channels']:
-                # self.run_thread('CPE_conf', channel)
+                self.run_thread('CPE_conf', channel)
 
                 self.run_thread('TCP_upload', channel)
                 self.run_thread('TCP_download', channel)
@@ -190,30 +191,37 @@ class Main(object):
                 self.run_thread('UDP_download', channel)
 
             self.write_description('END')
+
         except RuntimeError:
             EH(2041)
         except Exception as e:
-            EH(2042)
             print(e)
+            EH(2042)
 
     def multiple_hosts(self):
         try:
-            self.write_description('START')
+            self.write_description('START', 'MULTIPLE_HOSTS')
 
             for channel in self.conf_data['Channels']:
                 self.run_thread('CPE_conf', channel)
                 for method in self.iter_methods:
-                    for i in range(3):
+                    for i in range(self.host_amount):
+                        filename = ('log%s' % i)
                         self.run_thread(method,
                                         channel,
                                         wait_switch=False,
-                                        host_index=i)
+                                        host_index=i,
+                                        filename=filename)
                     else:
                         self.wait_for_thread()
+                        os.system('killall iperf')
 
-            self.write_description('END')
+            self.write_description('END', 'MULTIPLE_HOSTS')
+
         except RuntimeError:
             EH(2051)
         except Exception as e:
-            EH(2052)
             print(e)
+            EH(2052)
+
+

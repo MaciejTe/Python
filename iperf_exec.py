@@ -78,7 +78,7 @@ class Iperf(SshConnection):
             print(stderr.read())
             time.sleep(2)
             print(self.DEC)
-            os.system('killall iperf')
+            #os.system('killall iperf')
             self.__s.close()
             result = 0
 
@@ -141,7 +141,7 @@ class Iperf(SshConnection):
             print(stdout.read())
             time.sleep(2)
             print (self.DEC)
-            os.system('killall iperf')
+            #os.system('killall iperf')
             self.__s.close()
             result = 0
 
