@@ -24,7 +24,6 @@ def performance_test(type, udp, time, freq):
     """
     udp_validation(udp)
     time_validation(time)
-    print(Iperf.UDP_BANDWIDTH)
     if type == 'single':
         single = Main()
         single.one_host()

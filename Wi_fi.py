@@ -59,8 +59,6 @@ def error_check(run_thread):
 class Main(object):
 
     def __init__(self):
-        # TODO
-        # self!
         configuration = Configuration()
         self.conf_data = configuration.conf_data
         self.host_amount = len(self.conf_data['Username'])
@@ -126,7 +124,6 @@ class Main(object):
             thread = threads[thr_desc]
 
             thread.start()
-            time.sleep(2)
             
         except RuntimeError:
             EH(2011)
@@ -139,7 +136,6 @@ class Main(object):
     def wait_for_thread(self, switch=True):
         try:
             if switch:
-                # JOIN !!!!!!!!!!!!!!!!!!!!
                 while len(threading.enumerate()) is not 1:
                     pass
         except RuntimeError:
